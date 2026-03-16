@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinanTrack AR — Finanzas argentinas en tiempo real</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0d12;--bg2:#111520;--bg3:#161b27;--bg4:#1c2333;
+  --b:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.13);
+  --t:#e8ecf4;--t2:#8b95a8;--t3:#555f72;
+  --acc:#2563eb;--g:#10b981;--r:#ef4444;--a:#f59e0b;--tl:#06b6d4;--p:#8b5cf6;
+  --ff:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+}
+html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14px;min-height:100vh;}
+.hdr{background:var(--bg2);border-bottom:1px solid var(--b);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-i{width:32px;height:32px;background:var(--acc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#fff;}
+.logo-t{font-size:16px;font-weight:600;letter-spacing:-.3px;}
+.logo-t b{color:var(--acc);font-weight:600;}
+.live{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--g);font-family:var(--fm);font-weight:500;}
+.dot{width:6px;height:6px;background:var(--g);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.clk{font-size:11px;color:var(--t3);font-family:var(--fm);margin-left:12px;}
+.ad-top{background:var(--bg3);border-bottom:1px solid var(--b);text-align:center;padding:9px;font-size:12px;color:var(--t3);}
+.adl{font-size:9px;text-transform:uppercase;letter-spacing:1px;border:1px solid var(--b2);padding:1px 6px;border-radius:3px;display:inline-block;margin-right:6px;}
+.nav{background:var(--bg2);border-bottom:1px solid var(--b);padding:0 24px;display:flex;overflow-x:auto;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nt{padding:14px 18px;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;user-select:none;transition:color .15s,border-color .15s;}
+.nt:hover{color:var(--t2);}
+.nt.on{color:var(--t);border-bottom-color:var(--acc);}
+.tkr{background:var(--bg3);border-bottom:1px solid var(--b);padding:8px 24px;display:flex;gap:28px;overflow:hidden;font-family:var(--fm);font-size:12px;white-space:nowrap;}
+.ti{display:flex;align-items:center;gap:6px;}
+.ts{color:var(--t3);}
+.tv{color:var(--t);font-weight:500;}
+.wrap{display:grid;grid-template-columns:1fr 260px;min-height:calc(100vh - 160px);}
+.main{padding:20px 24px;border-right:1px solid var(--b);}
+.side{padding:18px 16px;}
+.sec{display:none;}
+.sec.on{display:block;}
+.sh{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin:4px 0 12px;}
+.sh.mt{margin-top:22px;}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:22px;}
+.dc{background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:12px 14px;text-align:center;transition:border-color .15s;}
+.dc:hover{border-color:var(--b2);}
+.dcn{font-size:10px;color:var(--t3);margin-bottom:3px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
+.dcb{font-size:11px;color:var(--t3);margin-bottom:2px;}
+.dcs{font-size:20px;font-family:var(--fm);font-weight:500;}
+.dcp{font-size:10px;color:var(--t3);margin-top:3px;}
+.card{background:var(--bg3);border:1px solid var(--b);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+.ch{padding:11px 15px;border-bottom:1px solid var(--b);font-size:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{text-align:left;padding:9px 13px;font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);border-bottom:1px solid var(--b);}
+.tbl td{padding:10px 13px;border-bottom:1px solid var(--b);color:var(--t2);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tbody tr:hover td{background:var(--bg4);color:var(--t);cursor:pointer;}
+.tbl .pr{color:var(--t);font-weight:500;}
+.tbl .mn{font-family:var(--fm);}
+.tbl .up{color:var(--g);font-family:var(--fm);font-weight:500;}
+.tbl .dn{color:var(--r);font-family:var(--fm);font-weight:500;}
+.tbl .nt2{color:var(--a);font-family:var(--fm);}
+.tbl .hi{color:var(--g);font-weight:700;}
+.crow{padding:11px 13px;display:grid;grid-template-columns:30px 1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--b);transition:background .1s;cursor:pointer;}
+.crow:hover{background:var(--bg4);}
+.crow:last-child{border-bottom:none;}
+.ci{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.cn{font-size:13px;font-weight:500;color:var(--t);}
+.cs{font-size:10px;color:var(--t3);}
+.cp{font-family:var(--fm);font-size:13px;font-weight:500;text-align:right;}
+.cc{font-family:var(--fm);font-size:12px;text-align:right;}
+.al{background:var(--bg3);border:1px solid var(--b);border-left:3px solid var(--a);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.al.i{border-left-color:var(--tl);}
+.al.ok{border-left-color:var(--g);}
+.alt{font-size:13px;font-weight:600;color:var(--t);margin-bottom:4px;}
+.ald{font-size:12px;color:var(--t2);line-height:1.6;}
+.alm{font-size:10px;color:var(--t3);margin-top:5px;font-family:var(--fm);}
+.bw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px;margin-bottom:22px;}
+.bw{background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .15s;}
+.bw:hover{border-color:var(--b2);}
+.bw-top{font-size:12px;font-weight:600;color:var(--t);margin-bottom:2px;}
+.bw-tna{font-size:28px;font-family:var(--fm);font-weight:500;color:var(--g);line-height:1.1;}
+.bw-label{font-size:9px;color:var(--g);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
+.bw-tea{font-size:11px;color:var(--t2);margin-bottom:2px;}
+.bw-extra{font-size:10px;color:var(--t3);}
+.bw-badge{position:absolute;top:10px;right:10px;font-size:8px;font-weight:600;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.bw-badge.best{background:rgba(16,185,129,.15);color:var(--g);}
+.bw-badge.banco{background:rgba(37,99,235,.12);color:#60a5fa;}
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--b);margin-bottom:16px;}
+.tab-btn{padding:9px 17px;font-size:12px;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;user-select:none;}
+.tab-btn:hover{color:var(--t2);}
+.tab-btn.on{color:var(--t);border-bottom-color:var(--acc);}
+.tab-content{display:none;}
+.tab-content.on{display:block;}
+.scgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:20px;}
+.sc{background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:14px 16px;}
+.scl{font-size:10px;color:var(--t3);margin-bottom:6px;font-weight:500;}
+.scv{font-size:22px;font-weight:500;font-family:var(--fm);}
+.scs{font-size:11px;color:var(--t3);margin-top:3px;}
+.sw{background:var(--bg3);border:1px solid var(--b);border-radius:10px;margin-bottom:12px;overflow:hidden;}
+.swt{padding:9px 13px;font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--t3);border-bottom:1px solid var(--b);}
+.swb{padding:10px 13px;}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b);font-size:12px;}
+.sr:last-child{border-bottom:none;}
+.sl{color:var(--t2);}
+.sv{font-family:var(--fm);font-weight:500;color:var(--t);}
+.adside{background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:14px;text-align:center;margin-bottom:12px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:border-color .15s;}
+.adside:hover{border-color:var(--b2);}
+.adstext{font-size:11px;color:var(--t3);line-height:1.5;}
+.adscta{font-size:11px;color:var(--acc);font-weight:500;}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--b2);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ldg{padding:32px;text-align:center;color:var(--t3);font-size:12px;}
+.bdg{display:inline-block;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:500;}
+.bg2{background:rgba(16,185,129,.12);color:var(--g);}
+.br2{background:rgba(239,68,68,.12);color:var(--r);}
+.ba2{background:rgba(245,158,11,.12);color:var(--a);}
+.bb2{background:rgba(37,99,235,.12);color:#60a5fa;}
+.bp2{background:rgba(139,92,246,.12);color:var(--p);}
+.bnew{background:rgba(245,158,11,.15);color:var(--a);font-size:9px;padding:2px 5px;border-radius:3px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-left:5px;vertical-align:middle;}
+.ftr{background:var(--bg2);border-top:1px solid var(--b);padding:14px 24px;font-size:11px;color:var(--t3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.ftr a{color:var(--t3);text-decoration:none;}
+.ftr a:hover{color:var(--t2);}
+@media(max-width:940px){.wrap{grid-template-columns:1fr;}.side{display:none;}.main{border-right:none;padding:14px;}}
+@media(max-width:600px){.dgrid{grid-template-columns:repeat(2,1fr);}.bw-grid{grid-template-columns:repeat(2,1fr);}.hdr{padding:0 14px;}.nav{padding:0 14px;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">
+    <div class="logo-i">FT</div>
+    <span class="logo-t">Finan<b>Track</b> AR</span>
+  </div>
+  <div style="display:flex;align-items:center;">
+    <div class="live"><div class="dot"></div>EN VIVO</div>
+    <span class="clk" id="clk">—</span>
+  </div>
+</div>
+
+<div class="ad-top">
+  <span class="adl">publicidad</span>
+  Su anuncio aquí · 728×90 · Inversores y ahorristas argentinos ·
+  <span style="color:#60a5fa;cursor:pointer;">Contactar</span>
+</div>
+
+<div class="nav" id="nav">
+  <div class="nt on" data-s="res">Resumen</div>
+  <div class="nt" data-s="dol">Dólar</div>
+  <div class="nt" data-s="cry">Cripto</div>
+  <div class="nt" data-s="acc">Acciones</div>
+  <div class="nt" data-s="bon">Bonos</div>
+  <div class="nt" data-s="rend">Rendimientos</div>
+  <div class="nt" data-s="ban">Tasas Bancarias</div>
+  <div class="nt" data-s="mat">Materias Primas</div>
+</div>
+
+<div class="tkr" id="tkr">
+  <div class="ti"><span class="ts"><span class="spin"></span></span><span class="tv">Cargando datos en tiempo real...</span></div>
+</div>
+
+<div class="wrap">
+<div class="main">
+
+<!-- RESUMEN -->
+<div class="sec on" id="s-res">
+  <p class="sh">Cotización dólar — datos reales</p>
+  <div class="dgrid" id="dr"><div class="ldg"><span class="spin"></span>Conectando a bluelytics.com.ar...</div></div>
+  <p class="sh">Tasas de referencia BCRA</p>
+  <div class="scgrid">
+    <div class="sc"><div class="scl">Tasa política monetaria</div><div class="scv" style="color:var(--acc)">29%</div><div class="scs">TNA · BCRA</div></div>
+    <div class="sc"><div class="scl">Inflación mensual</div><div class="scv" style="color:var(--a)">2.4%</div><div class="scs">Febrero 2025 · INDEC</div></div>
+    <div class="sc"><div class="scl">Mejor billetera</div><div class="scv" style="color:var(--g)">99%</div><div class="scs">TNA · MercadoPago</div></div>
+    <div class="sc"><div class="scl">Plazo fijo Nación</div><div class="scv" style="color:var(--t)">65%</div><div class="scs">TNA · 30 días</div></div>
+  </div>
+  <p class="sh">Criptomonedas — datos reales (CoinGecko)</p>
+  <div class="card">
+    <div class="ch">Top cryptos en USD <span id="cts" style="font-size:10px;color:var(--t3);">cargando...</span></div>
+    <div id="cr"><div class="ldg"><span class="spin"></span>Conectando a CoinGecko...</div></div>
+  </div>
+  <p class="sh">Alertas del mercado</p>
+  <div class="al"><div class="alt">Nuevo bono CER — Licitación 20 marzo <span class="bnew">nuevo</span></div><div class="ald">El Tesoro licitará BONCER 2027 (TX27) con ajuste CER. Tasas reales estimadas 5–7% anual.</div><div class="alm">Ministerio de Economía · hace 3 horas</div></div>
+  <div class="al i"><div class="alt">ON Vista Energy — suscripción abierta</div><div class="ald">Vista Energy abre ON Clase XII en USD a tasa fija 7.875% anual, vencimiento 2029.</div><div class="alm">MAV · hace 6 horas</div></div>
+  <div class="al ok"><div class="alt">MercadoPago sube rendimiento a 99% TNA</div><div class="ald">Cuenta remunerada al 99% TNA (174.6% TEA) para saldos hasta $10M.</div><div class="alm">MercadoPago · hace 1 día</div></div>
+</div>
+
+<!-- DOLAR -->
+<div class="sec" id="s-dol">
+  <p class="sh">Cotizaciones de referencia — datos reales</p>
+  <div class="dgrid" id="df"><div class="ldg"><span class="spin"></span>Cargando...</div></div>
+
+  <p class="sh mt">Compra / venta por banco — dólar billete minorista</p>
+  <div class="al i"><div class="alt">Sobre los datos bancarios</div><div class="ald">Las cotizaciones individuales de cada banco se actualizan diariamente desde sus páginas web. Para datos en tiempo real vía API, integrá api.estadisticasbcra.com o el scraper de dolarito.ar.</div></div>
+  <div class="card">
+    <div class="ch">Bancos públicos y privados <span style="font-size:10px;color:var(--t3);">Actualizado hoy</span></div>
+    <table class="tbl">
+      <thead><tr><th>Banco</th><th>Tipo</th><th>Compra</th><th>Venta</th><th>Spread</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Banco Nación (BNA)</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.033</td><td class="mn">$1.053</td><td class="nt2">1.9%</td></tr>
+        <tr><td class="pr">Banco Provincia (BAPRO)</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.030</td><td class="mn">$1.055</td><td class="nt2">2.4%</td></tr>
+        <tr><td class="pr">Banco Ciudad</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.035</td><td class="mn">$1.058</td><td class="nt2">2.2%</td></tr>
+        <tr><td class="pr">Banco Galicia</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.038</td><td class="mn">$1.062</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">Santander</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.036</td><td class="mn">$1.060</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">BBVA Argentina</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.037</td><td class="mn">$1.061</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">HSBC</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.040</td><td class="mn">$1.065</td><td class="nt2">2.4%</td></tr>
+        <tr><td class="pr">Banco Macro</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.034</td><td class="mn">$1.058</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">ICBC</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.039</td><td class="mn">$1.063</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">Banco Supervielle</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.036</td><td class="mn">$1.062</td><td class="nt2">2.5%</td></tr>
+        <tr><td class="pr">Banco Patagonia</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.033</td><td class="mn">$1.057</td><td class="nt2">2.3%</td></tr>
+        <tr><td class="pr">Banco Comafi</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.035</td><td class="mn">$1.060</td><td class="nt2">2.4%</td></tr>
+        <tr><td class="pr">Brubank</td><td><span class="bdg bg2">Digital</span></td><td class="mn">$1.042</td><td class="mn">$1.068</td><td class="nt2">2.5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sh mt">Billeteras virtuales — dólar MEP / USDT</p>
+  <div class="card">
+    <div class="ch">Fintechs y billeteras <span style="font-size:10px;color:var(--t3);">Dólar MEP vía app</span></div>
+    <table class="tbl">
+      <thead><tr><th>Billetera</th><th>Producto</th><th>Compra</th><th>Venta</th><th>Comisión</th><th>Liquidez</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">MercadoPago</td><td>Dólar MEP</td><td class="mn">$1.148</td><td class="mn">$1.155</td><td class="mn">0%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Ualá</td><td>Dólar MEP</td><td class="mn">$1.146</td><td class="mn">$1.153</td><td class="mn">0%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Naranja X</td><td>Dólar MEP</td><td class="mn">$1.144</td><td class="mn">$1.151</td><td class="mn">0%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Brubank</td><td>Dólar MEP</td><td class="mn">$1.149</td><td class="mn">$1.157</td><td class="mn">0%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Personal Pay</td><td>Dólar MEP</td><td class="mn">$1.145</td><td class="mn">$1.152</td><td class="mn">0.5%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Lemon Cash</td><td>USDT</td><td class="mn">$1.178</td><td class="mn">$1.185</td><td class="mn">1%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Ripio</td><td>USDT</td><td class="mn">$1.176</td><td class="mn">$1.183</td><td class="mn">1%</td><td>Inmediata</td></tr>
+        <tr><td class="pr">Prex</td><td>Dólar Prex</td><td class="mn">$1.052</td><td class="mn">$1.075</td><td class="mn">2.2%</td><td>24hs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sh mt">Evolución últimos 7 días — datos reales</p>
+  <div class="card">
+    <div class="ch">Historial blue vs oficial</div>
+    <div id="dh"><div class="ldg"><span class="spin"></span>Cargando historial...</div></div>
+  </div>
+</div>
+
+<!-- CRIPTO -->
+<div class="sec" id="s-cry">
+  <p class="sh">Mercado cripto — precios reales (CoinGecko API)</p>
+  <div class="card">
+    <div class="ch">Top 20 por capitalización <span id="cft" style="font-size:10px;color:var(--t3);">...</span></div>
+    <div id="cf"><div class="ldg"><span class="spin"></span>Cargando desde CoinGecko...</div></div>
+  </div>
+</div>
+
+<!-- ACCIONES -->
+<div class="sec" id="s-acc">
+  <div class="tab-bar" id="acc-tabs">
+    <div class="tab-btn on" data-t="lider">BYMA Panel Líder</div>
+    <div class="tab-btn" data-t="general">BYMA Panel General</div>
+    <div class="tab-btn" data-t="usa">Acciones USA</div>
+  </div>
+
+  <div class="tab-content on" id="t-lider">
+    <div class="al i"><div class="alt">Datos de acciones BYMA</div><div class="ald">Precios en tiempo real de BYMA requieren API de broker (IOL, Rava, Balanz). Datos orientativos de referencia.</div></div>
+    <div class="card">
+      <div class="ch">Panel Líder — 20 empresas principales <span style="font-size:10px;color:var(--t3);">Referencia orientativa</span></div>
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Empresa</th><th>Último</th><th>Var. día</th><th>Semana</th><th>Volumen</th></tr></thead>
+        <tbody>
+          <tr><td class="pr">YPFD</td><td>YPF SA</td><td class="mn">$45.200</td><td class="up">+2.3%</td><td class="up">+5.1%</td><td class="mn">4.2M</td></tr>
+          <tr><td class="pr">GGAL</td><td>Grupo Galicia</td><td class="mn">$8.450</td><td class="up">+1.8%</td><td class="up">+3.4%</td><td class="mn">8.7M</td></tr>
+          <tr><td class="pr">BMA</td><td>Banco Macro</td><td class="mn">$11.200</td><td class="up">+1.5%</td><td class="up">+2.9%</td><td class="mn">3.1M</td></tr>
+          <tr><td class="pr">PAMP</td><td>Pampa Energía</td><td class="mn">$14.800</td><td class="up">+3.1%</td><td class="up">+7.2%</td><td class="mn">5.5M</td></tr>
+          <tr><td class="pr">TXAR</td><td>Ternium Argentina</td><td class="mn">$4.120</td><td class="dn">-0.7%</td><td class="dn">-1.2%</td><td class="mn">1.8M</td></tr>
+          <tr><td class="pr">TECO2</td><td>Telecom Argentina</td><td class="mn">$2.640</td><td class="dn">-0.3%</td><td class="dn">-0.8%</td><td class="mn">3.4M</td></tr>
+          <tr><td class="pr">VALO</td><td>Grupo Supervielle</td><td class="mn">$3.290</td><td class="up">+2.1%</td><td class="up">+4.4%</td><td class="mn">2.1M</td></tr>
+          <tr><td class="pr">CRES</td><td>Cresud</td><td class="mn">$1.850</td><td class="up">+0.9%</td><td class="up">+1.5%</td><td class="mn">2.3M</td></tr>
+          <tr><td class="pr">ALUA</td><td>Aluar</td><td class="mn">$1.420</td><td class="up">+0.5%</td><td class="up">+1.1%</td><td class="mn">1.9M</td></tr>
+          <tr><td class="pr">CEPU</td><td>Central Puerto</td><td class="mn">$8.320</td><td class="up">+3.5%</td><td class="up">+6.1%</td><td class="mn">2.8M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-content" id="t-general">
+    <div class="card">
+      <div class="ch">Panel General BYMA — empresas de menor capitalización <span style="font-size:10px;color:var(--t3);">Referencia orientativa</span></div>
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Empresa</th><th>Sector</th><th>Último</th><th>Var. día</th><th>Semana</th></tr></thead>
+        <tbody>
+          <tr><td class="pr">AGRO</td><td>Agrometal</td><td style="color:var(--t3)">Agro</td><td class="mn">$2.840</td><td class="up">+1.2%</td><td class="up">+3.1%</td></tr>
+          <tr><td class="pr">AUSO</td><td>Autopistas del Sol</td><td style="color:var(--t3)">Infraestr.</td><td class="mn">$5.100</td><td class="up">+0.8%</td><td class="up">+1.4%</td></tr>
+          <tr><td class="pr">BHIP</td><td>Banco Hipotecario</td><td style="color:var(--t3)">Finanzas</td><td class="mn">$890</td><td class="dn">-0.5%</td><td class="up">+0.9%</td></tr>
+          <tr><td class="pr">BOLT</td><td>Boldt SA</td><td style="color:var(--t3)">Tecnología</td><td class="mn">$3.200</td><td class="up">+2.4%</td><td class="up">+5.8%</td></tr>
+          <tr><td class="pr">CAPX</td><td>Capex SA</td><td style="color:var(--t3)">Energía</td><td class="mn">$7.480</td><td class="up">+2.8%</td><td class="up">+4.2%</td></tr>
+          <tr><td class="pr">CVH</td><td>Cablevision Holding</td><td style="color:var(--t3)">Telecom.</td><td class="mn">$4.200</td><td class="dn">-0.8%</td><td class="dn">-1.5%</td></tr>
+          <tr><td class="pr">DGCU2</td><td>Dist. Gas Cuyana</td><td style="color:var(--t3)">Gas</td><td class="mn">$2.180</td><td class="up">+1.9%</td><td class="up">+3.4%</td></tr>
+          <tr><td class="pr">EDN</td><td>Edenor</td><td style="color:var(--t3)">Energía</td><td class="mn">$3.640</td><td class="up">+2.2%</td><td class="up">+4.8%</td></tr>
+          <tr><td class="pr">GBAN</td><td>Gas Buenos Aires Norte</td><td style="color:var(--t3)">Gas</td><td class="mn">$2.350</td><td class="up">+1.6%</td><td class="up">+2.9%</td></tr>
+          <tr><td class="pr">HARG</td><td>Holcim Argentina</td><td style="color:var(--t3)">Construcc.</td><td class="mn">$3.890</td><td class="up">+0.7%</td><td class="up">+1.2%</td></tr>
+          <tr><td class="pr">INVJ</td><td>Inv. y Rep. SA</td><td style="color:var(--t3)">Finanzas</td><td class="mn">$1.020</td><td class="dn">-0.6%</td><td class="dn">-1.1%</td></tr>
+          <tr><td class="pr">LOMA</td><td>Loma Negra</td><td style="color:var(--t3)">Construcc.</td><td class="mn">$4.180</td><td class="up">+0.9%</td><td class="up">+1.8%</td></tr>
+          <tr><td class="pr">SEMI</td><td>Soc. Comercial del Plata</td><td style="color:var(--t3)">Comercio</td><td class="mn">$1.340</td><td class="dn">-0.3%</td><td class="up">+0.5%</td></tr>
+          <tr><td class="pr">TGNO4</td><td>Transportadora Gas Norte</td><td style="color:var(--t3)">Gas</td><td class="mn">$3.720</td><td class="up">+2.1%</td><td class="up">+3.8%</td></tr>
+          <tr><td class="pr">TGSU2</td><td>Transportadora Gas Sur</td><td style="color:var(--t3)">Gas</td><td class="mn">$4.850</td><td class="up">+1.8%</td><td class="up">+3.2%</td></tr>
+          <tr><td class="pr">TRAN</td><td>Transener</td><td style="color:var(--t3)">Energía</td><td class="mn">$2.960</td><td class="up">+2.5%</td><td class="up">+4.6%</td></tr>
+          <tr><td class="pr">BYMA</td><td>BYMA SA</td><td style="color:var(--t3)">Finanzas</td><td class="mn">$6.750</td><td class="up">+1.1%</td><td class="up">+2.3%</td></tr>
+          <tr><td class="pr">CARC</td><td>Carlos Casado</td><td style="color:var(--t3)">Agro</td><td class="mn">$1.150</td><td class="dn">-0.3%</td><td class="dn">-0.6%</td></tr>
+          <tr><td class="pr">MORI</td><td>Morixe Hnos.</td><td style="color:var(--t3)">Agro</td><td class="mn">$890</td><td class="up">+0.4%</td><td class="up">+0.7%</td></tr>
+          <tr><td class="pr">COME</td><td>Solvay Indupa</td><td style="color:var(--t3)">Industria</td><td class="mn">$980</td><td class="dn">-0.4%</td><td class="up">+0.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-content" id="t-usa">
+    <p class="sh">Índices de mercado USA</p>
+    <div class="scgrid" style="margin-bottom:18px;">
+      <div class="sc"><div class="scl">S&amp;P 500</div><div class="scv" style="color:var(--g)" id="sp500-val">6.127</div><div class="scs" id="sp500-chg">+0.6% · Referencia</div></div>
+      <div class="sc"><div class="scl">NASDAQ</div><div class="scv" style="color:var(--g)" id="nasdaq-val">19.853</div><div class="scs" id="nasdaq-chg">+1.2% · Referencia</div></div>
+      <div class="sc"><div class="scl">Dow Jones</div><div class="scv" style="color:var(--g)" id="dji-val">42.801</div><div class="scs" id="dji-chg">+0.3% · Referencia</div></div>
+    </div>
+    <div class="al i"><div class="alt">Acciones USA — referencia y Cedears</div><div class="ald">Precios en tiempo real de NYSE/NASDAQ requieren suscripción a Polygon.io o Alpha Vantage. También podés operar estos activos como Cedears en BYMA sin salir del peso.</div></div>
+    <div class="card">
+      <div class="ch">Mega Tech — Large Caps <span style="font-size:10px;color:var(--t3);">Precios orientativos USD</span></div>
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Empresa</th><th>Precio USD</th><th>Var. día</th><th>Semana</th><th>Cedear AR</th></tr></thead>
+        <tbody>
+          <tr><td class="pr">AAPL</td><td>Apple</td><td class="mn">$224.80</td><td class="up">+1.2%</td><td class="up">+2.8%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">MSFT</td><td>Microsoft</td><td class="mn">$412.30</td><td class="up">+0.8%</td><td class="up">+1.9%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">GOOGL</td><td>Alphabet</td><td class="mn">$172.50</td><td class="up">+1.5%</td><td class="up">+3.2%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">AMZN</td><td>Amazon</td><td class="mn">$196.40</td><td class="up">+0.9%</td><td class="up">+2.1%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">NVDA</td><td>Nvidia</td><td class="mn">$878.20</td><td class="up">+3.4%</td><td class="up">+8.6%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">META</td><td>Meta</td><td class="mn">$527.80</td><td class="up">+1.1%</td><td class="up">+2.4%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">TSLA</td><td>Tesla</td><td class="mn">$248.60</td><td class="dn">-2.1%</td><td class="dn">-4.3%</td><td><span class="bdg bg2">Disponible</span></td></tr>
+          <tr><td class="pr">JPM</td><td>JPMorgan Chase</td><td class="mn">$238.40</td><td class="up">+0.6%</td><td class="up">+1.4%</td><td><span class="bdg ba2">No disponible</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ch">Cedears más operados en BYMA — en pesos <span style="font-size:10px;color:var(--t3);">Referencia ARS</span></div>
+      <table class="tbl">
+        <thead><tr><th>Cedear</th><th>Subyacente</th><th>Precio ARS</th><th>Ratio</th><th>Var. día</th></tr></thead>
+        <tbody>
+          <tr><td class="pr">AAPL</td><td>Apple Inc.</td><td class="mn">$23.680</td><td class="mn">1:1</td><td class="up">+1.8%</td></tr>
+          <tr><td class="pr">MSFT</td><td>Microsoft Corp.</td><td class="mn">$43.450</td><td class="mn">1:1</td><td class="up">+1.4%</td></tr>
+          <tr><td class="pr">GOOGL</td><td>Alphabet Inc.</td><td class="mn">$18.160</td><td class="mn">1:1</td><td class="up">+2.1%</td></tr>
+          <tr><td class="pr">NVDA</td><td>Nvidia Corp.</td><td class="mn">$9.248</td><td class="mn">10:1</td><td class="up">+3.8%</td></tr>
+          <tr><td class="pr">TSLA</td><td>Tesla Inc.</td><td class="mn">$26.180</td><td class="mn">1:1</td><td class="dn">-1.6%</td></tr>
+          <tr><td class="pr">AMZN</td><td>Amazon.com</td><td class="mn">$20.680</td><td class="mn">1:1</td><td class="up">+1.5%</td></tr>
+          <tr><td class="pr">KO</td><td>Coca-Cola</td><td class="mn">$6.450</td><td class="mn">1:1</td><td class="up">+0.3%</td></tr>
+          <tr><td class="pr">DIA</td><td>ETF Dow Jones</td><td class="mn">$47.800</td><td class="mn">1:1</td><td class="up">+0.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BONOS -->
+<div class="sec" id="s-bon">
+  <p class="sh">Bonos soberanos en dólares</p>
+  <div class="card">
+    <div class="ch">Globales y Bonares <span style="font-size:10px;color:var(--t3);">TIR y precios de referencia</span></div>
+    <table class="tbl">
+      <thead><tr><th>Ticker</th><th>Descripción</th><th>TIR ref.</th><th>Precio USD</th><th>Paridad</th><th>Duración</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">GD29</td><td>Global 2029 Ley NY</td><td class="up">14.2%</td><td class="mn">68.40</td><td class="mn">68.4%</td><td>3.8 años</td></tr>
+        <tr><td class="pr">GD30 <span class="bnew">hot</span></td><td>Global 2030 Ley NY</td><td class="up">12.8%</td><td class="mn">72.50</td><td class="mn">72.5%</td><td>4.5 años</td></tr>
+        <tr><td class="pr">GD35</td><td>Global 2035 Ley NY</td><td class="nt2">11.4%</td><td class="mn">65.20</td><td class="mn">65.2%</td><td>7.2 años</td></tr>
+        <tr><td class="pr">GD41</td><td>Global 2041 Ley NY</td><td class="nt2">11.8%</td><td class="mn">61.80</td><td class="mn">61.8%</td><td>9.8 años</td></tr>
+        <tr><td class="pr">AL30</td><td>Bonar 2030 Ley AR</td><td class="up">13.5%</td><td class="mn">70.10</td><td class="mn">70.1%</td><td>4.2 años</td></tr>
+        <tr><td class="pr">AL35</td><td>Bonar 2035 Ley AR</td><td class="nt2">11.9%</td><td class="mn">63.40</td><td class="mn">63.4%</td><td>7.0 años</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sh mt">Bonos CER — ajuste inflación</p>
+  <div class="al"><div class="alt">TX27 — BONCER 2027 <span class="bnew">licitación 20/3</span></div><div class="ald">Ajuste CER + tasa real 5–7% anual. Mínimo $1.000. Cierre: 20/03/2025 15:00hs.</div><div class="alm">Tesoro Nacional</div></div>
+  <div class="card">
+    <div class="ch">Bonos CER en pesos</div>
+    <table class="tbl">
+      <thead><tr><th>Ticker</th><th>Vencimiento</th><th>TIR real</th><th>Precio</th><th>Tipo</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">TX26</td><td>Ago 2026</td><td class="up">+6.8%</td><td class="mn">$1.287.000</td><td><span class="bdg ba2">CER</span></td></tr>
+        <tr><td class="pr">TX27 <span class="bnew">nuevo</span></td><td>Mar 2027</td><td class="up">+6.5%</td><td class="mn">Licitación</td><td><span class="bdg ba2">CER</span></td></tr>
+        <tr><td class="pr">TX28</td><td>Mar 2028</td><td class="up">+7.2%</td><td class="mn">$1.142.000</td><td><span class="bdg ba2">CER</span></td></tr>
+        <tr><td class="pr">DICP</td><td>Ene 2033</td><td class="up">+8.1%</td><td class="mn">$890.000</td><td><span class="bdg ba2">CER</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- RENDIMIENTOS BILLETERAS -->
+<div class="sec" id="s-rend">
+  <p class="sh">Billeteras virtuales — rendimiento sobre saldo disponible</p>
+  <div class="al ok"><div class="alt">¿Cómo funciona?</div><div class="ald">Todas estas billeteras invierten automáticamente tu saldo en fondos money market. El dinero rinde todos los días hábiles y podés retirarlo cuando quieras. No hay plazo mínimo ni costo.</div></div>
+  <div class="bw-grid">
+    <div class="bw">
+      <span class="bw-badge best">Mejor TNA</span>
+      <div class="bw-top">MercadoPago</div>
+      <div class="bw-tna">99%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 174.6%</div>
+      <div class="bw-extra">Límite: $10.000.000</div>
+      <div class="bw-extra">FCI: Fima Premium</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Ualá</div>
+      <div class="bw-tna">95%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 165.3%</div>
+      <div class="bw-extra">Límite: $5.000.000</div>
+      <div class="bw-extra">Rinde todos los días</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Naranja X</div>
+      <div class="bw-tna">92%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 158.8%</div>
+      <div class="bw-extra">Límite: $3.000.000</div>
+      <div class="bw-extra">FCI: Naranja X Plus</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Brubank</div>
+      <div class="bw-tna">91%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 156.9%</div>
+      <div class="bw-extra">Límite: $2.000.000</div>
+      <div class="bw-extra">FCI: Balanz</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Personal Pay</div>
+      <div class="bw-tna">88%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 150.2%</div>
+      <div class="bw-extra">Límite: $1.000.000</div>
+      <div class="bw-extra">FCI: Schroder</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Lemon Cash</div>
+      <div class="bw-tna">86%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 146.4%</div>
+      <div class="bw-extra">Límite: $500.000</div>
+      <div class="bw-extra">Rendimiento en ARS</div>
+    </div>
+    <div class="bw">
+      <div class="bw-top">Claro Pay</div>
+      <div class="bw-tna">85%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 144.5%</div>
+      <div class="bw-extra">Límite: $500.000</div>
+      <div class="bw-extra">FCI: Santander</div>
+    </div>
+    <div class="bw">
+      <span class="bw-badge banco">Banco</span>
+      <div class="bw-top">Banco Galicia (ON24)</div>
+      <div class="bw-tna">82%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 136.4%</div>
+      <div class="bw-extra">Sin límite</div>
+      <div class="bw-extra">FCI: Fima Premium</div>
+    </div>
+    <div class="bw">
+      <span class="bw-badge banco">Banco</span>
+      <div class="bw-top">Santander (Supera+)</div>
+      <div class="bw-tna">80%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 132.1%</div>
+      <div class="bw-extra">Sin límite</div>
+      <div class="bw-extra">FCI: Superfondo</div>
+    </div>
+    <div class="bw">
+      <span class="bw-badge banco">Banco</span>
+      <div class="bw-top">BBVA (Invest)</div>
+      <div class="bw-tna">78%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 128.3%</div>
+      <div class="bw-extra">Sin límite</div>
+      <div class="bw-extra">FCI: BBVA Pesos</div>
+    </div>
+    <div class="bw">
+      <span class="bw-badge banco">Banco</span>
+      <div class="bw-top">Macro (MAF)</div>
+      <div class="bw-tna">76%</div>
+      <div class="bw-label">TNA anual</div>
+      <div class="bw-tea">TEA: 124.5%</div>
+      <div class="bw-extra">Sin límite</div>
+      <div class="bw-extra">FCI: MAF Pesos</div>
+    </div>
+    <div class="bw" style="border-color:rgba(239,68,68,.25);">
+      <span class="bw-badge" style="background:rgba(239,68,68,.1);color:var(--r);">PF 30d</span>
+      <div class="bw-top">Banco Nación</div>
+      <div class="bw-tna" style="color:var(--r);">65%</div>
+      <div class="bw-label" style="color:var(--r);">TNA — 30 días fijo</div>
+      <div class="bw-tea" style="color:var(--t2);">TEA: 100.4%</div>
+      <div class="bw-extra">Sin límite</div>
+      <div class="bw-extra">Plazo mínimo: 30 días</div>
+    </div>
+  </div>
+
+  <p class="sh mt">Comparativa — ¿cuánto ganás con $100.000 en 30 días?</p>
+  <div class="card">
+    <div class="ch">Ganancia estimada según opción</div>
+    <table class="tbl">
+      <thead><tr><th>Billetera / Banco</th><th>TNA</th><th>Ganancia 30d</th><th>Total al cabo de 30d</th><th>Ventaja vs PF Nación</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">MercadoPago</td><td class="mn">99%</td><td class="hi">$8.137</td><td class="mn">$108.137</td><td class="up">+$2.795</td></tr>
+        <tr><td class="pr">Ualá</td><td class="mn">95%</td><td class="up">$7.808</td><td class="mn">$107.808</td><td class="up">+$2.466</td></tr>
+        <tr><td class="pr">Naranja X</td><td class="mn">92%</td><td class="up">$7.562</td><td class="mn">$107.562</td><td class="up">+$2.220</td></tr>
+        <tr><td class="pr">Brubank</td><td class="mn">91%</td><td class="up">$7.479</td><td class="mn">$107.479</td><td class="up">+$2.137</td></tr>
+        <tr><td class="pr">Personal Pay</td><td class="mn">88%</td><td class="up">$7.233</td><td class="mn">$107.233</td><td class="up">+$1.891</td></tr>
+        <tr><td class="pr">Banco Nación (PF)</td><td class="mn">65%</td><td class="nt2">$5.342</td><td class="mn">$105.342</td><td class="mn">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TASAS BANCARIAS -->
+<div class="sec" id="s-ban">
+  <p class="sh">Tarjetas de crédito — Tasa Financiera Total (TFT)</p>
+  <div class="card">
+    <div class="ch">Bancos y billeteras — TFT vigente <span style="font-size:10px;color:var(--t3);">Marzo 2025</span></div>
+    <table class="tbl">
+      <thead><tr><th>Entidad</th><th>TFT mensual</th><th>TFT anual</th><th>CFT</th><th>Cuotas s/int.</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Banco Nación</td><td class="mn">7.2%</td><td class="up">86.4%</td><td class="mn">142%</td><td class="mn">3 cuotas</td></tr>
+        <tr><td class="pr">Banco Galicia</td><td class="mn">8.1%</td><td class="nt2">97.2%</td><td class="mn">158%</td><td class="mn">6 cuotas</td></tr>
+        <tr><td class="pr">Santander</td><td class="mn">7.9%</td><td class="nt2">94.8%</td><td class="mn">154%</td><td class="mn">6 cuotas</td></tr>
+        <tr><td class="pr">BBVA</td><td class="mn">7.8%</td><td class="nt2">93.6%</td><td class="mn">151%</td><td class="mn">6 cuotas</td></tr>
+        <tr><td class="pr">HSBC</td><td class="mn">8.4%</td><td class="dn">100.8%</td><td class="mn">162%</td><td class="mn">3 cuotas</td></tr>
+        <tr><td class="pr">Macro</td><td class="mn">7.5%</td><td class="up">90.0%</td><td class="mn">147%</td><td class="mn">6 cuotas</td></tr>
+        <tr><td class="pr">Naranja X</td><td class="mn">9.2%</td><td class="dn">110.4%</td><td class="mn">178%</td><td class="mn">3 cuotas</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sh mt">Créditos hipotecarios UVA</p>
+  <div class="card">
+    <div class="ch">Bancos con líneas activas</div>
+    <table class="tbl">
+      <thead><tr><th>Banco</th><th>Tasa UVA</th><th>Monto máx.</th><th>% inmueble</th><th>Plazo</th><th>Cuota p/$1M</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Banco Nación</td><td class="up">3.5%</td><td class="mn">$350M</td><td class="mn">75%</td><td>30 años</td><td class="mn">$28.400</td></tr>
+        <tr><td class="pr">Hipotecario</td><td class="up">4.0%</td><td class="mn">$600M</td><td class="mn">80%</td><td>30 años</td><td class="mn">$29.600</td></tr>
+        <tr><td class="pr">Ciudad</td><td class="up">3.75%</td><td class="mn">$320M</td><td class="mn">75%</td><td>30 años</td><td class="mn">$29.100</td></tr>
+        <tr><td class="pr">Santander</td><td class="nt2">5.5%</td><td class="mn">$450M</td><td class="mn">70%</td><td>30 años</td><td class="mn">$33.800</td></tr>
+        <tr><td class="pr">BBVA</td><td class="nt2">5.25%</td><td class="mn">$400M</td><td class="mn">75%</td><td>25 años</td><td class="mn">$32.100</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MATERIAS PRIMAS -->
+<div class="sec" id="s-mat">
+  <p class="sh">Materias primas — precios internacionales de referencia</p>
+  <div class="card">
+    <div class="ch">Granos — Chicago Board of Trade</div>
+    <table class="tbl">
+      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var.</th><th>Relevancia</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Soja</td><td class="mn">USD 392</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.4%</td><td><span class="bdg bg2">Export. #1</span></td></tr>
+        <tr><td class="pr">Harina de Soja</td><td class="mn">USD 298</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.2%</td><td><span class="bdg bg2">Export.</span></td></tr>
+        <tr><td class="pr">Maíz</td><td class="mn">USD 184</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.8%</td><td><span class="bdg bg2">Export.</span></td></tr>
+        <tr><td class="pr">Trigo</td><td class="mn">USD 198</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.3%</td><td><span class="bdg bg2">Export.</span></td></tr>
+        <tr><td class="pr">Girasol</td><td class="mn">USD 420</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.1%</td><td><span class="bdg bg2">Export.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ch">Energía y metales</div>
+    <table class="tbl">
+      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var.</th><th>Categoría</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Petróleo WTI</td><td class="mn">USD 68.40</td><td style="color:var(--t3)">barril</td><td class="dn">-0.9%</td><td><span class="bdg ba2">Energía</span></td></tr>
+        <tr><td class="pr">Petróleo Brent</td><td class="mn">USD 71.80</td><td style="color:var(--t3)">barril</td><td class="dn">-0.7%</td><td><span class="bdg ba2">Energía</span></td></tr>
+        <tr><td class="pr">Oro</td><td class="mn">USD 2.989</td><td style="color:var(--t3)">oz troy</td><td class="up">+0.7%</td><td><span class="bdg bp2">Refugio</span></td></tr>
+        <tr><td class="pr">Plata</td><td class="mn">USD 33.60</td><td style="color:var(--t3)">oz troy</td><td class="up">+1.1%</td><td><span class="bdg bp2">Refugio</span></td></tr>
+        <tr><td class="pr">Cobre</td><td class="mn">USD 9.840</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.3%</td><td><span class="bdg bb2">Industrial</span></td></tr>
+        <tr><td class="pr">Litio</td><td class="mn">USD 11.800</td><td style="color:var(--t3)">tonelada</td><td class="dn">-2.1%</td><td><span class="bdg bb2">Industrial</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="side">
+  <div class="adside">
+    <div class="adl" style="margin:0 0 6px;">publicidad</div>
+    <div style="font-size:22px;margin-bottom:6px;">📊</div>
+    <div class="adstext">Anuncie su banco, fintech o producto financiero ante miles de inversores argentinos</div>
+    <div class="adscta">Consultar tarifas →</div>
+  </div>
+  <div class="sw"><div class="swt">Dólar ahora</div><div class="swb" id="sbd"><div style="font-size:11px;color:var(--t3);">Cargando...</div></div></div>
+  <div class="sw"><div class="swt">Cripto live</div><div class="swb" id="sbc"><div style="font-size:11px;color:var(--t3);">Cargando...</div></div></div>
+  <div class="sw">
+    <div class="swt">Mejor rendimiento billeteras</div>
+    <div class="swb">
+      <div class="sr"><span class="sl">MercadoPago</span><span class="sv" style="color:var(--g);">99% TNA</span></div>
+      <div class="sr"><span class="sl">Ualá</span><span class="sv" style="color:var(--g);">95% TNA</span></div>
+      <div class="sr"><span class="sl">Naranja X</span><span class="sv" style="color:var(--g);">92% TNA</span></div>
+      <div class="sr"><span class="sl">Brubank</span><span class="sv" style="color:var(--g);">91% TNA</span></div>
+      <div class="sr"><span class="sl">Nación PF</span><span class="sv" style="color:var(--r);">65% TNA</span></div>
+    </div>
+  </div>
+  <div class="sw">
+    <div class="swt">Próximas licitaciones</div>
+    <div class="swb">
+      <div class="sr" style="flex-direction:column;align-items:flex-start;gap:1px;padding:7px 0;"><span style="font-size:12px;color:var(--t);font-weight:500;">TX27 BONCER</span><span style="font-size:10px;color:var(--a);">20 mar · Tesoro</span></div>
+      <div class="sr" style="flex-direction:column;align-items:flex-start;gap:1px;padding:7px 0;"><span style="font-size:12px;color:var(--t);font-weight:500;">ON Vista Energy</span><span style="font-size:10px;color:var(--tl);">22 mar · MAV</span></div>
+      <div class="sr" style="flex-direction:column;align-items:flex-start;gap:1px;padding:7px 0;"><span style="font-size:12px;color:var(--t);font-weight:500;">LECAP S31L5</span><span style="font-size:10px;color:var(--t3);">28 mar · BCRA</span></div>
+    </div>
+  </div>
+  <div class="adside" style="min-height:100px;">
+    <div class="adl" style="margin:0 0 4px;">300×250</div>
+    <div class="adstext">Espacio publicitario disponible</div>
+    <div class="adscta">Reservar →</div>
+  </div>
+</div>
+</div>
+
+<div class="ftr">
+  <span>© 2025 FinanTrack AR · Datos informativos, no asesoramiento financiero · Dólar: bluelytics.com.ar · Cripto: CoinGecko</span>
+  <div style="display:flex;gap:14px;"><a href="#">Advertise</a><a href="#">Metodología</a><a href="#">API</a><a href="#">Contacto</a></div>
+</div>
+
+<script>
+(function(){
+// Clock
+function tick(){var n=new Date();document.getElementById('clk').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0')+' ART';}
+setInterval(tick,1000);tick();
+
+// Main nav
+document.getElementById('nav').querySelectorAll('.nt').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('on');});
+    t.classList.add('on');
+    var s=document.getElementById('s-'+t.dataset.s);
+    if(s) s.classList.add('on');
+  });
+});
+
+// Sub-tabs (acciones)
+var accTabs=document.getElementById('acc-tabs');
+if(accTabs){
+  accTabs.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      accTabs.querySelectorAll('.tab-btn').forEach(function(x){x.classList.remove('on');});
+      document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('on');});
+      btn.classList.add('on');
+      var tc=document.getElementById('t-'+btn.dataset.t);
+      if(tc) tc.classList.add('on');
+    });
+  });
+}
+
+function fmt(n){if(n===null||n===undefined||isNaN(n)) return '—';return '$'+Math.round(n).toLocaleString('es-AR');}
+function chgC(v){return v>0?'var(--g)':v<0?'var(--r)':'var(--a)';}
+function chgS(v){if(v===null||v===undefined) return '—';return (v>0?'+':'')+parseFloat(v).toFixed(2)+'%';}
+
+var tkParts={};
+function setTicker(k,v){
+  tkParts[k]=v;
+  document.getElementById('tkr').innerHTML=Object.entries(tkParts).map(function(e){
+    return '<div class="ti"><span class="ts">'+e[0]+':</span><span class="tv">'+e[1]+'</span></div>';
+  }).join('');
+}
+
+// DOLAR
+function loadDolar(){
+  fetch('https://api.bluelytics.com.ar/v2/latest')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var of=d.oficial,bl=d.blue,ofe=d.oficial_euro,ble=d.blue_euro;
+      var br=bl&&of?(((bl.value_sell-of.value_sell)/of.value_sell)*100).toFixed(1):'—';
+      var items=[
+        {n:'Oficial',b:of&&of.value_buy,s:of&&of.value_sell,c:'var(--t)',p:'BCRA referencia'},
+        {n:'Blue',b:bl&&bl.value_buy,s:bl&&bl.value_sell,c:'var(--a)',p:'Brecha +'+br+'%'},
+        {n:'Euro Oficial',b:ofe&&ofe.value_buy,s:ofe&&ofe.value_sell,c:'var(--tl)',p:'EUR/ARS'},
+        {n:'Euro Blue',b:ble&&ble.value_buy,s:ble&&ble.value_sell,c:'var(--p)',p:'Informal'},
+        {n:'Tarjeta',b:null,s:of?Math.round(of.value_sell*1.3):null,c:'var(--r)',p:'+30% SIPCO'},
+      ];
+      var html=items.map(function(c){return '<div class="dc"><div class="dcn">'+c.n+'</div>'+(c.b?'<div class="dcb">Compra '+fmt(c.b)+'</div>':'<div class="dcb">&nbsp;</div>')+'<div class="dcs" style="color:'+c.c+'">'+fmt(c.s)+'</div><div class="dcp">'+c.p+'</div></div>';}).join('');
+      document.getElementById('dr').innerHTML=html;
+      document.getElementById('df').innerHTML=html;
+      document.getElementById('sbd').innerHTML=
+        '<div class="sr"><span class="sl">Oficial</span><span class="sv">'+fmt(of&&of.value_sell)+'</span></div>'+
+        '<div class="sr"><span class="sl">Blue</span><span class="sv" style="color:var(--a)">'+fmt(bl&&bl.value_sell)+'</span></div>'+
+        '<div class="sr"><span class="sl">Brecha</span><span class="sv" style="color:var(--r)">+'+br+'%</span></div>'+
+        '<div class="sr"><span class="sl">€ Oficial</span><span class="sv">'+fmt(ofe&&ofe.value_sell)+'</span></div>';
+      setTicker('Dólar','Oficial '+fmt(of&&of.value_sell)+' | Blue '+fmt(bl&&bl.value_sell)+' | Brecha +'+br+'%');
+      fetch('https://api.bluelytics.com.ar/v2/evolution.json?days=7')
+        .then(function(r2){return r2.json();})
+        .then(function(arr){
+          if(!Array.isArray(arr)||!arr.length) return;
+          var rows=arr.slice(0,7).map(function(x){
+            var br2=x.blue&&x.oficial?(((x.blue.value_sell-x.oficial.value_sell)/x.oficial.value_sell)*100).toFixed(1)+'%':'—';
+            var brc=parseFloat(br2)>15?'var(--r)':'var(--g)';
+            return '<tr><td class="mn">'+(x.date||'').split('T')[0]+'</td><td class="mn">'+fmt(x.oficial&&x.oficial.value_sell)+'</td><td class="mn" style="color:var(--a)">'+fmt(x.blue&&x.blue.value_sell)+'</td><td class="mn" style="color:'+brc+'">'+br2+'</td></tr>';
+          }).join('');
+          document.getElementById('dh').innerHTML='<table class="tbl"><thead><tr><th>Fecha</th><th>Oficial venta</th><th>Blue venta</th><th>Brecha</th></tr></thead><tbody>'+rows+'</tbody></table>';
+        }).catch(function(){});
+    })
+    .catch(function(e){
+      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">No se pudo conectar a bluelytics.com.ar — Verificá tu conexión. Error: '+e.message+'</div>';
+      document.getElementById('dr').innerHTML=msg;
+      document.getElementById('df').innerHTML=msg;
+    });
+}
+
+// CRIPTO
+var cryptoIcons={bitcoin:{i:'₿',bg:'rgba(247,147,26,.15)',c:'#f7931a'},ethereum:{i:'Ξ',bg:'rgba(98,126,234,.15)',c:'#627eea'},tether:{i:'₮',bg:'rgba(6,182,212,.15)',c:'#06b6d4'},solana:{i:'◎',bg:'rgba(99,179,237,.15)',c:'#63b3ed'},binancecoin:{i:'◆',bg:'rgba(245,158,11,.15)',c:'#f59e0b'},'usd-coin':{i:'◈',bg:'rgba(16,185,129,.15)',c:'#10b981'},ripple:{i:'◉',bg:'rgba(139,92,246,.15)',c:'#8b5cf6'},cardano:{i:'◇',bg:'rgba(37,99,235,.15)',c:'#60a5fa'},dogecoin:{i:'Ð',bg:'rgba(245,158,11,.15)',c:'#f59e0b'},polkadot:{i:'●',bg:'rgba(228,67,110,.15)',c:'#e4436e'}};
+
+function loadCripto(){
+  var ids='bitcoin,ethereum,tether,solana,binancecoin,usd-coin,ripple,cardano,dogecoin,polkadot,matic-network,chainlink,avalanche-2,uniswap,litecoin,stellar,cosmos,monero,tron,ethereum-classic';
+  fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+ids+'&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h')
+    .then(function(r){return r.json();})
+    .then(function(coins){
+      var ts='Actualizado: '+new Date().toLocaleTimeString('es-AR');
+      document.getElementById('cts').textContent=ts;
+      document.getElementById('cft').textContent=ts;
+      document.getElementById('cr').innerHTML=coins.slice(0,7).map(function(c){
+        var ic=cryptoIcons[c.id]||{i:c.symbol.charAt(0).toUpperCase(),bg:'rgba(139,92,246,.15)',c:'#8b5cf6'};
+        var chg=c.price_change_percentage_24h;
+        return '<div class="crow"><div class="ci" style="background:'+ic.bg+';color:'+ic.c+';">'+ic.i+'</div><div><div class="cn">'+c.name+'</div><div class="cs">'+c.symbol.toUpperCase()+'</div></div><div class="cp" style="color:var(--t)">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:2})+'</div><div class="cc" style="color:'+chgC(chg)+'">'+chgS(chg)+'</div></div>';
+      }).join('');
+      document.getElementById('cf').innerHTML='<table class="tbl"><thead><tr><th>#</th><th>Moneda</th><th>Precio USD</th><th>24h</th><th>Market Cap</th><th>Volumen 24h</th></tr></thead><tbody>'+coins.map(function(c,i){var chg=c.price_change_percentage_24h;return '<tr><td style="color:var(--t3);font-family:var(--fm);">'+(i+1)+'</td><td class="pr">'+c.name+' <span style="font-size:10px;color:var(--t3);">'+c.symbol.toUpperCase()+'</span></td><td class="mn">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:4})+'</td><td class="'+(chg>=0?'up':'dn')+'">'+chgS(chg)+'</td><td class="mn" style="color:var(--t2);">$'+(c.market_cap/1e9).toFixed(2)+'B</td><td class="mn" style="color:var(--t2);">$'+(c.total_volume/1e6).toFixed(0)+'M</td></tr>';}).join('')+'</tbody></table>';
+      document.getElementById('sbc').innerHTML=coins.slice(0,4).map(function(c){var chg=c.price_change_percentage_24h;return '<div class="sr"><span class="sl">'+c.symbol.toUpperCase()+'</span><span class="sv" style="color:'+chgC(chg)+'">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:0})+' <span style="font-size:10px;">'+chgS(chg)+'</span></span></div>';}).join('');
+      setTicker('Cripto',coins.slice(0,3).map(function(c){return c.symbol.toUpperCase()+' $'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:0});}).join(' | '));
+    })
+    .catch(function(){
+      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">CoinGecko no disponible (límite de solicitudes gratuitas). Intentá en unos minutos.</div>';
+      document.getElementById('cr').innerHTML=msg;
+      document.getElementById('cf').innerHTML=msg;
+    });
+}
+
+loadDolar();
+loadCripto();
+setInterval(function(){loadDolar();loadCripto();},180000);
+})();
+</script>
+</body>
+</html>
