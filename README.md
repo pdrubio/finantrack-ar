@@ -1,1 +1,1 @@
-# finantrack-ar
+# finan-ar
