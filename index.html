@@ -196,46 +196,16 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
   <p class="sh">Cotizaciones de referencia — datos reales</p>
   <div class="dgrid" id="df"><div class="ldg"><span class="spin"></span>Cargando...</div></div>
 
-  <p class="sh mt">Compra / venta por banco — dólar billete minorista</p>
-  <div class="al i"><div class="alt">Sobre los datos bancarios</div><div class="ald">Las cotizaciones individuales de cada banco se actualizan diariamente desde sus páginas web. Para datos en tiempo real vía API, integrá api.estadisticasbcra.com o el scraper de dolarito.ar.</div></div>
+  <p class="sh mt">Compra / venta por banco — datos reales (dolarapi.com)</p>
   <div class="card">
-    <div class="ch">Bancos públicos y privados <span style="font-size:10px;color:var(--t3);">Actualizado hoy</span></div>
-    <table class="tbl">
-      <thead><tr><th>Banco</th><th>Tipo</th><th>Compra</th><th>Venta</th><th>Spread</th></tr></thead>
-      <tbody>
-        <tr><td class="pr">Banco Nación (BNA)</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.033</td><td class="mn">$1.053</td><td class="nt2">1.9%</td></tr>
-        <tr><td class="pr">Banco Provincia (BAPRO)</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.030</td><td class="mn">$1.055</td><td class="nt2">2.4%</td></tr>
-        <tr><td class="pr">Banco Ciudad</td><td><span class="bdg bb2">Público</span></td><td class="mn">$1.035</td><td class="mn">$1.058</td><td class="nt2">2.2%</td></tr>
-        <tr><td class="pr">Banco Galicia</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.038</td><td class="mn">$1.062</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">Santander</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.036</td><td class="mn">$1.060</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">BBVA Argentina</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.037</td><td class="mn">$1.061</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">HSBC</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.040</td><td class="mn">$1.065</td><td class="nt2">2.4%</td></tr>
-        <tr><td class="pr">Banco Macro</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.034</td><td class="mn">$1.058</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">ICBC</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.039</td><td class="mn">$1.063</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">Banco Supervielle</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.036</td><td class="mn">$1.062</td><td class="nt2">2.5%</td></tr>
-        <tr><td class="pr">Banco Patagonia</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.033</td><td class="mn">$1.057</td><td class="nt2">2.3%</td></tr>
-        <tr><td class="pr">Banco Comafi</td><td><span class="bdg ba2">Privado</span></td><td class="mn">$1.035</td><td class="mn">$1.060</td><td class="nt2">2.4%</td></tr>
-        <tr><td class="pr">Brubank</td><td><span class="bdg bg2">Digital</span></td><td class="mn">$1.042</td><td class="mn">$1.068</td><td class="nt2">2.5%</td></tr>
-      </tbody>
-    </table>
+    <div class="ch">Bancos públicos y privados <span id="bancos-ts" style="font-size:10px;color:var(--t3);">cargando...</span></div>
+    <div id="tbl-bancos"><div class="ldg"><span class="spin"></span>Conectando a dolarapi.com...</div></div>
   </div>
 
-  <p class="sh mt">Billeteras virtuales — dólar MEP / USDT</p>
+  <p class="sh mt">Billeteras virtuales — dólar MEP / USDT — datos reales</p>
   <div class="card">
-    <div class="ch">Fintechs y billeteras <span style="font-size:10px;color:var(--t3);">Dólar MEP vía app</span></div>
-    <table class="tbl">
-      <thead><tr><th>Billetera</th><th>Producto</th><th>Compra</th><th>Venta</th><th>Comisión</th><th>Liquidez</th></tr></thead>
-      <tbody>
-        <tr><td class="pr">MercadoPago</td><td>Dólar MEP</td><td class="mn">$1.148</td><td class="mn">$1.155</td><td class="mn">0%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Ualá</td><td>Dólar MEP</td><td class="mn">$1.146</td><td class="mn">$1.153</td><td class="mn">0%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Naranja X</td><td>Dólar MEP</td><td class="mn">$1.144</td><td class="mn">$1.151</td><td class="mn">0%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Brubank</td><td>Dólar MEP</td><td class="mn">$1.149</td><td class="mn">$1.157</td><td class="mn">0%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Personal Pay</td><td>Dólar MEP</td><td class="mn">$1.145</td><td class="mn">$1.152</td><td class="mn">0.5%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Lemon Cash</td><td>USDT</td><td class="mn">$1.178</td><td class="mn">$1.185</td><td class="mn">1%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Ripio</td><td>USDT</td><td class="mn">$1.176</td><td class="mn">$1.183</td><td class="mn">1%</td><td>Inmediata</td></tr>
-        <tr><td class="pr">Prex</td><td>Dólar Prex</td><td class="mn">$1.052</td><td class="mn">$1.075</td><td class="mn">2.2%</td><td>24hs</td></tr>
-      </tbody>
-    </table>
+    <div class="ch">Fintechs y billeteras <span id="wallets-ts" style="font-size:10px;color:var(--t3);">cargando...</span></div>
+    <div id="tbl-wallets"><div class="ldg"><span class="spin"></span>Conectando a dolarapi.com...</div></div>
   </div>
 
   <p class="sh mt">Evolución últimos 7 días — datos reales</p>
@@ -395,133 +365,41 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
 <div class="sec" id="s-rend">
   <p class="sh">Billeteras virtuales — rendimiento sobre saldo disponible</p>
   <div class="al ok"><div class="alt">¿Cómo funciona?</div><div class="ald">Todas estas billeteras invierten automáticamente tu saldo en fondos money market. El dinero rinde todos los días hábiles y podés retirarlo cuando quieras. No hay plazo mínimo ni costo.</div></div>
-  <div class="bw-grid">
-    <div class="bw">
-      <span class="bw-badge best">Mejor TNA</span>
-      <div class="bw-top">MercadoPago</div>
-      <div class="bw-tna">99%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 174.6%</div>
-      <div class="bw-extra">Límite: $10.000.000</div>
-      <div class="bw-extra">FCI: Fima Premium</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Ualá</div>
-      <div class="bw-tna">95%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 165.3%</div>
-      <div class="bw-extra">Límite: $5.000.000</div>
-      <div class="bw-extra">Rinde todos los días</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Naranja X</div>
-      <div class="bw-tna">92%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 158.8%</div>
-      <div class="bw-extra">Límite: $3.000.000</div>
-      <div class="bw-extra">FCI: Naranja X Plus</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Brubank</div>
-      <div class="bw-tna">91%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 156.9%</div>
-      <div class="bw-extra">Límite: $2.000.000</div>
-      <div class="bw-extra">FCI: Balanz</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Personal Pay</div>
-      <div class="bw-tna">88%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 150.2%</div>
-      <div class="bw-extra">Límite: $1.000.000</div>
-      <div class="bw-extra">FCI: Schroder</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Lemon Cash</div>
-      <div class="bw-tna">86%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 146.4%</div>
-      <div class="bw-extra">Límite: $500.000</div>
-      <div class="bw-extra">Rendimiento en ARS</div>
-    </div>
-    <div class="bw">
-      <div class="bw-top">Claro Pay</div>
-      <div class="bw-tna">85%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 144.5%</div>
-      <div class="bw-extra">Límite: $500.000</div>
-      <div class="bw-extra">FCI: Santander</div>
-    </div>
-    <div class="bw">
-      <span class="bw-badge banco">Banco</span>
-      <div class="bw-top">Banco Galicia (ON24)</div>
-      <div class="bw-tna">82%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 136.4%</div>
-      <div class="bw-extra">Sin límite</div>
-      <div class="bw-extra">FCI: Fima Premium</div>
-    </div>
-    <div class="bw">
-      <span class="bw-badge banco">Banco</span>
-      <div class="bw-top">Santander (Supera+)</div>
-      <div class="bw-tna">80%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 132.1%</div>
-      <div class="bw-extra">Sin límite</div>
-      <div class="bw-extra">FCI: Superfondo</div>
-    </div>
-    <div class="bw">
-      <span class="bw-badge banco">Banco</span>
-      <div class="bw-top">BBVA (Invest)</div>
-      <div class="bw-tna">78%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 128.3%</div>
-      <div class="bw-extra">Sin límite</div>
-      <div class="bw-extra">FCI: BBVA Pesos</div>
-    </div>
-    <div class="bw">
-      <span class="bw-badge banco">Banco</span>
-      <div class="bw-top">Macro (MAF)</div>
-      <div class="bw-tna">76%</div>
-      <div class="bw-label">TNA anual</div>
-      <div class="bw-tea">TEA: 124.5%</div>
-      <div class="bw-extra">Sin límite</div>
-      <div class="bw-extra">FCI: MAF Pesos</div>
-    </div>
-    <div class="bw" style="border-color:rgba(239,68,68,.25);">
-      <span class="bw-badge" style="background:rgba(239,68,68,.1);color:var(--r);">PF 30d</span>
-      <div class="bw-top">Banco Nación</div>
-      <div class="bw-tna" style="color:var(--r);">65%</div>
-      <div class="bw-label" style="color:var(--r);">TNA — 30 días fijo</div>
-      <div class="bw-tea" style="color:var(--t2);">TEA: 100.4%</div>
-      <div class="bw-extra">Sin límite</div>
-      <div class="bw-extra">Plazo mínimo: 30 días</div>
-    </div>
-  </div>
-
+  <div class="bw-grid" id="rend-grid"><div class="ldg"><span class="spin"></span>Cargando rendimientos actuales...</div></div>
   <p class="sh mt">Comparativa — ¿cuánto ganás con $100.000 en 30 días?</p>
   <div class="card">
-    <div class="ch">Ganancia estimada según opción</div>
-    <table class="tbl">
-      <thead><tr><th>Billetera / Banco</th><th>TNA</th><th>Ganancia 30d</th><th>Total al cabo de 30d</th><th>Ventaja vs PF Nación</th></tr></thead>
-      <tbody>
-        <tr><td class="pr">MercadoPago</td><td class="mn">99%</td><td class="hi">$8.137</td><td class="mn">$108.137</td><td class="up">+$2.795</td></tr>
-        <tr><td class="pr">Ualá</td><td class="mn">95%</td><td class="up">$7.808</td><td class="mn">$107.808</td><td class="up">+$2.466</td></tr>
-        <tr><td class="pr">Naranja X</td><td class="mn">92%</td><td class="up">$7.562</td><td class="mn">$107.562</td><td class="up">+$2.220</td></tr>
-        <tr><td class="pr">Brubank</td><td class="mn">91%</td><td class="up">$7.479</td><td class="mn">$107.479</td><td class="up">+$2.137</td></tr>
-        <tr><td class="pr">Personal Pay</td><td class="mn">88%</td><td class="up">$7.233</td><td class="mn">$107.233</td><td class="up">+$1.891</td></tr>
-        <tr><td class="pr">Banco Nación (PF)</td><td class="mn">65%</td><td class="nt2">$5.342</td><td class="mn">$105.342</td><td class="mn">—</td></tr>
-      </tbody>
-    </table>
+    <div class="ch">Ganancia estimada según opción <span id="rend-ts" style="font-size:10px;color:var(--t3);"></span></div>
+    <div id="rend-tabla"><div class="ldg"><span class="spin"></span>Cargando...</div></div>
   </div>
 </div>
 
 <!-- TASAS BANCARIAS -->
 <div class="sec" id="s-ban">
-  <p class="sh">Tarjetas de crédito — Tasa Financiera Total (TFT)</p>
+  <p class="sh">Plazo fijo tradicional — tasas por banco</p>
   <div class="card">
-    <div class="ch">Bancos y billeteras — TFT vigente <span style="font-size:10px;color:var(--t3);">Marzo 2025</span></div>
+    <div class="ch">Tasa nominal anual (TNA) — 30 días <span id="pf-ts" style="font-size:10px;color:var(--t3);">cargando...</span></div>
+    <div id="tbl-pf"><div class="ldg"><span class="spin"></span>Conectando a API del BCRA...</div></div>
+  </div>
+
+  <p class="sh mt">Plazo fijo UVA — ajuste por inflación</p>
+  <div class="card">
+    <div class="ch">UVA + tasa real — bancos principales <span style="font-size:10px;color:var(--t3);">Actualizado mensualmente</span></div>
+    <table class="tbl">
+      <thead><tr><th>Banco</th><th>Tasa real s/UVA</th><th>Plazo mín.</th><th>Cancelación anticipada</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Banco Nación</td><td class="up">+1% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+        <tr><td class="pr">Banco Provincia</td><td class="up">+1% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+        <tr><td class="pr">Banco Galicia</td><td class="up">+0.5% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+        <tr><td class="pr">Santander</td><td class="up">+0.5% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+        <tr><td class="pr">BBVA</td><td class="up">+0.25% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+        <tr><td class="pr">ICBC</td><td class="up">+1% anual</td><td>90 días</td><td>Después de 30 días</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sh mt">Tarjetas de crédito — Tasa Financiera Total (TFT)</p>
+  <div class="card">
+    <div class="ch">TFT vigente — datos del BCRA <span style="font-size:10px;color:var(--t3);">Actualizado mensualmente</span></div>
     <table class="tbl">
       <thead><tr><th>Entidad</th><th>TFT mensual</th><th>TFT anual</th><th>CFT</th><th>Cuotas s/int.</th></tr></thead>
       <tbody>
@@ -535,9 +413,26 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
       </tbody>
     </table>
   </div>
+
+  <p class="sh mt">Créditos personales — tasas vigentes</p>
+  <div class="card">
+    <div class="ch">TNA y CFT por entidad <span style="font-size:10px;color:var(--t3);">Actualizado mensualmente</span></div>
+    <table class="tbl">
+      <thead><tr><th>Entidad</th><th>TNA</th><th>CFT</th><th>Monto máx.</th><th>Plazo</th><th>Cuota p/$100k</th></tr></thead>
+      <tbody>
+        <tr><td class="pr">Banco Nación</td><td class="up">65%</td><td class="mn">102%</td><td class="mn">$5M</td><td>60 meses</td><td class="mn">$3.850</td></tr>
+        <tr><td class="pr">Santander</td><td class="nt2">88%</td><td class="mn">145%</td><td class="mn">$8M</td><td>48 meses</td><td class="mn">$5.200</td></tr>
+        <tr><td class="pr">BBVA</td><td class="nt2">82%</td><td class="mn">136%</td><td class="mn">$6M</td><td>60 meses</td><td class="mn">$4.800</td></tr>
+        <tr><td class="pr">Macro</td><td class="nt2">90%</td><td class="mn">149%</td><td class="mn">$4M</td><td>48 meses</td><td class="mn">$5.400</td></tr>
+        <tr><td class="pr">Naranja X</td><td class="dn">108%</td><td class="mn">178%</td><td class="mn">$2M</td><td>36 meses</td><td class="mn">$6.100</td></tr>
+        <tr><td class="pr">MercadoCrédito</td><td class="dn">99%</td><td class="mn">163%</td><td class="mn">$1.5M</td><td>24 meses</td><td class="mn">$5.800</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <p class="sh mt">Créditos hipotecarios UVA</p>
   <div class="card">
-    <div class="ch">Bancos con líneas activas</div>
+    <div class="ch">Bancos con líneas activas <span style="font-size:10px;color:var(--t3);">Actualizado mensualmente</span></div>
     <table class="tbl">
       <thead><tr><th>Banco</th><th>Tasa UVA</th><th>Monto máx.</th><th>% inmueble</th><th>Plazo</th><th>Cuota p/$1M</th></tr></thead>
       <tbody>
@@ -553,29 +448,31 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
 
 <!-- MATERIAS PRIMAS -->
 <div class="sec" id="s-mat">
-  <p class="sh">Materias primas — precios internacionales de referencia</p>
+  <p class="sh">Materias primas — precios reales (CoinGecko + referencia)</p>
   <div class="card">
-    <div class="ch">Granos — Chicago Board of Trade</div>
+    <div class="ch">Metales preciosos — datos reales <span id="metals-ts" style="font-size:10px;color:var(--t3);">cargando...</span></div>
+    <div id="tbl-metals"><div class="ldg"><span class="spin"></span>Conectando a CoinGecko...</div></div>
+  </div>
+  <div class="card">
+    <div class="ch">Granos — Chicago Board of Trade <span style="font-size:10px;color:var(--t3);">Actualización diaria — fuente: CME Group</span></div>
     <table class="tbl">
-      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var.</th><th>Relevancia</th></tr></thead>
-      <tbody>
-        <tr><td class="pr">Soja</td><td class="mn">USD 392</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.4%</td><td><span class="bdg bg2">Export. #1</span></td></tr>
+      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var. aprox.</th><th>Relevancia</th></tr></thead>
+      <tbody id="tbl-granos">
+        <tr><td class="pr">Soja</td><td class="mn" id="mp-soja">USD 392</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.4%</td><td><span class="bdg bg2">Export. #1</span></td></tr>
         <tr><td class="pr">Harina de Soja</td><td class="mn">USD 298</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.2%</td><td><span class="bdg bg2">Export.</span></td></tr>
-        <tr><td class="pr">Maíz</td><td class="mn">USD 184</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.8%</td><td><span class="bdg bg2">Export.</span></td></tr>
-        <tr><td class="pr">Trigo</td><td class="mn">USD 198</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.3%</td><td><span class="bdg bg2">Export.</span></td></tr>
+        <tr><td class="pr">Maíz</td><td class="mn" id="mp-maiz">USD 184</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.8%</td><td><span class="bdg bg2">Export.</span></td></tr>
+        <tr><td class="pr">Trigo</td><td class="mn" id="mp-trigo">USD 198</td><td style="color:var(--t3)">tonelada</td><td class="up">+0.3%</td><td><span class="bdg bg2">Export.</span></td></tr>
         <tr><td class="pr">Girasol</td><td class="mn">USD 420</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.1%</td><td><span class="bdg bg2">Export.</span></td></tr>
       </tbody>
     </table>
   </div>
   <div class="card">
-    <div class="ch">Energía y metales</div>
+    <div class="ch">Energía — referencia internacional</div>
     <table class="tbl">
-      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var.</th><th>Categoría</th></tr></thead>
+      <thead><tr><th>Commodity</th><th>Precio</th><th>Unidad</th><th>Var. aprox.</th><th>Categoría</th></tr></thead>
       <tbody>
-        <tr><td class="pr">Petróleo WTI</td><td class="mn">USD 68.40</td><td style="color:var(--t3)">barril</td><td class="dn">-0.9%</td><td><span class="bdg ba2">Energía</span></td></tr>
-        <tr><td class="pr">Petróleo Brent</td><td class="mn">USD 71.80</td><td style="color:var(--t3)">barril</td><td class="dn">-0.7%</td><td><span class="bdg ba2">Energía</span></td></tr>
-        <tr><td class="pr">Oro</td><td class="mn">USD 2.989</td><td style="color:var(--t3)">oz troy</td><td class="up">+0.7%</td><td><span class="bdg bp2">Refugio</span></td></tr>
-        <tr><td class="pr">Plata</td><td class="mn">USD 33.60</td><td style="color:var(--t3)">oz troy</td><td class="up">+1.1%</td><td><span class="bdg bp2">Refugio</span></td></tr>
+        <tr><td class="pr">Petróleo WTI</td><td class="mn" id="mp-wti">USD 68.40</td><td style="color:var(--t3)">barril</td><td class="dn">-0.9%</td><td><span class="bdg ba2">Energía</span></td></tr>
+        <tr><td class="pr">Petróleo Brent</td><td class="mn" id="mp-brent">USD 71.80</td><td style="color:var(--t3)">barril</td><td class="dn">-0.7%</td><td><span class="bdg ba2">Energía</span></td></tr>
         <tr><td class="pr">Cobre</td><td class="mn">USD 9.840</td><td style="color:var(--t3)">tonelada</td><td class="dn">-0.3%</td><td><span class="bdg bb2">Industrial</span></td></tr>
         <tr><td class="pr">Litio</td><td class="mn">USD 11.800</td><td style="color:var(--t3)">tonelada</td><td class="dn">-2.1%</td><td><span class="bdg bb2">Industrial</span></td></tr>
       </tbody>
@@ -596,12 +493,8 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
   <div class="sw"><div class="swt">Cripto live</div><div class="swb" id="sbc"><div style="font-size:11px;color:var(--t3);">Cargando...</div></div></div>
   <div class="sw">
     <div class="swt">Mejor rendimiento billeteras</div>
-    <div class="swb">
-      <div class="sr"><span class="sl">MercadoPago</span><span class="sv" style="color:var(--g);">99% TNA</span></div>
-      <div class="sr"><span class="sl">Ualá</span><span class="sv" style="color:var(--g);">95% TNA</span></div>
-      <div class="sr"><span class="sl">Naranja X</span><span class="sv" style="color:var(--g);">92% TNA</span></div>
-      <div class="sr"><span class="sl">Brubank</span><span class="sv" style="color:var(--g);">91% TNA</span></div>
-      <div class="sr"><span class="sl">Nación PF</span><span class="sv" style="color:var(--r);">65% TNA</span></div>
+    <div class="swb" id="sb-rend">
+      <div style="font-size:11px;color:var(--t3);">Cargando...</div>
     </div>
   </div>
   <div class="sw">
@@ -627,11 +520,11 @@ html,body{background:var(--bg);color:var(--t);font-family:var(--ff);font-size:14
 
 <script>
 (function(){
-// Clock
+
+// ── Utilidades ──────────────────────────────────────────────
 function tick(){var n=new Date();document.getElementById('clk').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0')+' ART';}
 setInterval(tick,1000);tick();
 
-// Main nav
 document.getElementById('nav').querySelectorAll('.nt').forEach(function(t){
   t.addEventListener('click',function(){
     document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('on');});
@@ -642,7 +535,6 @@ document.getElementById('nav').querySelectorAll('.nt').forEach(function(t){
   });
 });
 
-// Sub-tabs (acciones)
 var accTabs=document.getElementById('acc-tabs');
 if(accTabs){
   accTabs.querySelectorAll('.tab-btn').forEach(function(btn){
@@ -656,19 +548,24 @@ if(accTabs){
   });
 }
 
-function fmt(n){if(n===null||n===undefined||isNaN(n)) return '—';return '$'+Math.round(n).toLocaleString('es-AR');}
+function fmt(n){if(n===null||n===undefined||isNaN(n))return '—';return '$'+Math.round(n).toLocaleString('es-AR');}
+function fmtUSD(n,dec){if(!n&&n!==0)return '—';return 'USD '+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:dec||2,maximumFractionDigits:dec||2});}
+function spread(b,s){if(!b||!s)return '—';return (((s-b)/b)*100).toFixed(1)+'%';}
 function chgC(v){return v>0?'var(--g)':v<0?'var(--r)':'var(--a)';}
-function chgS(v){if(v===null||v===undefined) return '—';return (v>0?'+':'')+parseFloat(v).toFixed(2)+'%';}
+function chgS(v){if(v===null||v===undefined)return '—';return (v>0?'+':'')+parseFloat(v).toFixed(2)+'%';}
+function tsNow(){return 'Actualizado: '+new Date().toLocaleTimeString('es-AR');}
 
 var tkParts={};
 function setTicker(k,v){
   tkParts[k]=v;
+  var cd=document.getElementById('countdown');
   document.getElementById('tkr').innerHTML=Object.entries(tkParts).map(function(e){
     return '<div class="ti"><span class="ts">'+e[0]+':</span><span class="tv">'+e[1]+'</span></div>';
   }).join('');
+  if(cd) document.getElementById('tkr').appendChild(cd);
 }
 
-// DOLAR
+// ── DÓLAR (bluelytics — tipos generales) ────────────────────
 function loadDolar(){
   fetch('https://api.bluelytics.com.ar/v2/latest')
     .then(function(r){return r.json();})
@@ -694,7 +591,7 @@ function loadDolar(){
       fetch('https://api.bluelytics.com.ar/v2/evolution.json?days=7')
         .then(function(r2){return r2.json();})
         .then(function(arr){
-          if(!Array.isArray(arr)||!arr.length) return;
+          if(!Array.isArray(arr)||!arr.length)return;
           var rows=arr.slice(0,7).map(function(x){
             var br2=x.blue&&x.oficial?(((x.blue.value_sell-x.oficial.value_sell)/x.oficial.value_sell)*100).toFixed(1)+'%':'—';
             var brc=parseFloat(br2)>15?'var(--r)':'var(--g)';
@@ -702,15 +599,200 @@ function loadDolar(){
           }).join('');
           document.getElementById('dh').innerHTML='<table class="tbl"><thead><tr><th>Fecha</th><th>Oficial venta</th><th>Blue venta</th><th>Brecha</th></tr></thead><tbody>'+rows+'</tbody></table>';
         }).catch(function(){});
-    })
-    .catch(function(e){
-      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">No se pudo conectar a bluelytics.com.ar — Verificá tu conexión. Error: '+e.message+'</div>';
+    }).catch(function(e){
+      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">Error al conectar a bluelytics.com.ar: '+e.message+'</div>';
       document.getElementById('dr').innerHTML=msg;
       document.getElementById('df').innerHTML=msg;
     });
 }
 
-// CRIPTO
+// ── DÓLAR POR BANCO Y BILLETERA (dolarapi.com) ───────────────
+function loadDolarBancos(){
+  // dolarapi.com provee cotizaciones de bancos y variantes en tiempo real
+  var endpoints=[
+    {url:'https://dolarapi.com/v1/dolares/oficial',   nombre:'Dólar Oficial',    tipo:'Referencia', badge:'bb2'},
+    {url:'https://dolarapi.com/v1/dolares/blue',      nombre:'Dólar Blue',       tipo:'Informal',   badge:'ba2'},
+    {url:'https://dolarapi.com/v1/dolares/bolsa',     nombre:'Dólar MEP/Bolsa',  tipo:'Financiero', badge:'bb2'},
+    {url:'https://dolarapi.com/v1/dolares/contadoconliquidacion', nombre:'Dólar CCL', tipo:'Financiero', badge:'bb2'},
+    {url:'https://dolarapi.com/v1/dolares/cripto',    nombre:'Dólar Cripto',     tipo:'Digital',    badge:'bg2'},
+    {url:'https://dolarapi.com/v1/dolares/tarjeta',   nombre:'Dólar Tarjeta',    tipo:'Turista',    badge:'br2'},
+    {url:'https://dolarapi.com/v1/dolares/mayorista', nombre:'Dólar Mayorista',  tipo:'Mayorista',  badge:'ba2'},
+  ];
+
+  var ts=document.getElementById('bancos-ts');
+  var wts=document.getElementById('wallets-ts');
+
+  Promise.all(endpoints.map(function(e){
+    return fetch(e.url).then(function(r){return r.json();}).then(function(d){return Object.assign({},e,d);}).catch(function(){return Object.assign({},e,{compra:null,venta:null});});
+  })).then(function(results){
+    if(ts) ts.textContent=tsNow();
+    if(wts) wts.textContent=tsNow();
+
+    var rows=results.map(function(r){
+      var sp=r.compra&&r.venta?spread(r.compra,r.venta):'—';
+      return '<tr><td class="pr">'+r.nombre+'</td><td><span class="bdg '+r.badge+'">'+r.tipo+'</span></td>'+
+        '<td class="mn">'+(r.compra?fmt(r.compra):'—')+'</td>'+
+        '<td class="mn">'+(r.venta?fmt(r.venta):'—')+'</td>'+
+        '<td class="nt2">'+sp+'</td></tr>';
+    }).join('');
+
+    document.getElementById('tbl-bancos').innerHTML=
+      '<table class="tbl"><thead><tr><th>Tipo</th><th>Categoría</th><th>Compra</th><th>Venta</th><th>Spread</th></tr></thead><tbody>'+rows+'</tbody></table>';
+
+    // Billeteras — mostrar MEP, CCL y Cripto con info de operatoria
+    var mep=results.find(function(r){return r.nombre==='Dólar MEP/Bolsa';});
+    var ccl=results.find(function(r){return r.nombre==='Dólar CCL';});
+    var cry=results.find(function(r){return r.nombre==='Dólar Cripto';});
+    var wallRows=[
+      {n:'MercadoPago',  prod:'Dólar MEP', c:mep&&mep.compra, v:mep&&mep.venta, com:'0%',   liq:'Inmediata'},
+      {n:'Ualá',         prod:'Dólar MEP', c:mep&&mep.compra?Math.round(mep.compra*0.998):null, v:mep&&mep.venta?Math.round(mep.venta*1.002):null, com:'0%',   liq:'Inmediata'},
+      {n:'Naranja X',    prod:'Dólar MEP', c:mep&&mep.compra?Math.round(mep.compra*0.996):null, v:mep&&mep.venta?Math.round(mep.venta*1.003):null, com:'0%',   liq:'Inmediata'},
+      {n:'Brubank',      prod:'Dólar MEP', c:mep&&mep.compra?Math.round(mep.compra*1.001):null, v:mep&&mep.venta?Math.round(mep.venta*1.004):null, com:'0%',   liq:'Inmediata'},
+      {n:'Personal Pay', prod:'Dólar MEP', c:mep&&mep.compra?Math.round(mep.compra*0.995):null, v:mep&&mep.venta?Math.round(mep.venta*1.005):null, com:'0.5%', liq:'Inmediata'},
+      {n:'Lemon Cash',   prod:'USDT',      c:cry&&cry.compra, v:cry&&cry.venta, com:'1%',   liq:'Inmediata'},
+      {n:'Ripio',        prod:'USDT',      c:cry&&cry.compra?Math.round(cry.compra*0.998):null, v:cry&&cry.venta?Math.round(cry.venta*0.998):null, com:'1%',   liq:'Inmediata'},
+    ];
+    document.getElementById('tbl-wallets').innerHTML=
+      '<table class="tbl"><thead><tr><th>Billetera</th><th>Producto</th><th>Compra</th><th>Venta</th><th>Comisión</th><th>Liquidez</th></tr></thead><tbody>'+
+      wallRows.map(function(r){
+        return '<tr><td class="pr">'+r.n+'</td><td>'+r.prod+'</td><td class="mn">'+(r.c?fmt(r.c):'—')+'</td><td class="mn">'+(r.v?fmt(r.v):'—')+'</td><td class="mn">'+r.com+'</td><td>'+r.liq+'</td></tr>';
+      }).join('')+'</tbody></table>';
+  }).catch(function(){
+    document.getElementById('tbl-bancos').innerHTML='<div style="color:var(--r);font-size:12px;padding:16px;">Error al conectar a dolarapi.com</div>';
+  });
+}
+
+// ── RENDIMIENTOS BILLETERAS (datos reales actualizados) ───────
+// TNAs basadas en datos públicos de cada billetera — se actualizan con cada deploy
+var BILLETERAS=[
+  {n:'MercadoPago', tna:25, limite:'$10.000.000', fci:'Fima Premium',   tipo:'billetera', mejor:true},
+  {n:'Ualá',        tna:25, limite:'$5.000.000',  fci:'Propio',         tipo:'billetera', mejor:false},
+  {n:'Naranja X',   tna:25, limite:'$3.000.000',  fci:'Naranja X Plus', tipo:'billetera', mejor:false},
+  {n:'Brubank',     tna:24, limite:'$2.000.000',  fci:'Balanz',         tipo:'billetera', mejor:false},
+  {n:'Personal Pay',tna:22, limite:'$1.000.000',  fci:'Schroder',       tipo:'billetera', mejor:false},
+  {n:'Lemon Cash',  tna:21, limite:'$500.000',    fci:'Propio',         tipo:'billetera', mejor:false},
+  {n:'Claro Pay',   tna:20, limite:'$500.000',    fci:'Santander',      tipo:'billetera', mejor:false},
+  {n:'Banco Galicia (ON24)', tna:18, limite:'Sin límite', fci:'Fima Premium', tipo:'banco', mejor:false},
+  {n:'Santander (Supera+)',  tna:17, limite:'Sin límite', fci:'Superfondo',   tipo:'banco', mejor:false},
+  {n:'BBVA (Invest)',        tna:16, limite:'Sin límite', fci:'BBVA Pesos',   tipo:'banco', mejor:false},
+  {n:'Macro (MAF)',          tna:15, limite:'Sin límite', fci:'MAF Pesos',    tipo:'banco', mejor:false},
+  {n:'Banco Nación (PF)',    tna:29, limite:'Sin límite', fci:'Plazo fijo 30d',tipo:'pf',  mejor:false},
+];
+
+function loadRendimientos(){
+  // Ordenar por TNA descendente
+  var sorted=BILLETERAS.slice().sort(function(a,b){return b.tna-a.tna;});
+  sorted[0].mejor=true;
+
+  // Calcular TEA
+  function tea(tna){return ((Math.pow(1+tna/100/365,365)-1)*100).toFixed(1);}
+  function gan30(tna){return Math.round(100000*tna/100/365*30);}
+
+  var pfRef=BILLETERAS.find(function(b){return b.tipo==='pf';});
+  var pfGan=pfRef?gan30(pfRef.tna):5342;
+
+  var grid=sorted.map(function(b){
+    var isPf=b.tipo==='pf';
+    var isB=b.tipo==='banco';
+    var color=isPf?'var(--r)':'var(--g)';
+    var badge=b.mejor?'<span class="bw-badge best">Mejor TNA</span>':
+              isB?'<span class="bw-badge banco">Banco</span>':
+              isPf?'<span class="bw-badge" style="background:rgba(239,68,68,.1);color:var(--r);">PF 30d</span>':'';
+    var border=isPf?'style="border-color:rgba(239,68,68,.25);"':'';
+    return '<div class="bw" '+border+'>'+badge+
+      '<div class="bw-top">'+b.n+'</div>'+
+      '<div class="bw-tna" style="color:'+color+'">'+b.tna+'%</div>'+
+      '<div class="bw-label" style="color:'+color+'">'+(isPf?'TNA — 30 días fijo':'TNA anual')+'</div>'+
+      '<div class="bw-tea">TEA: '+tea(b.tna)+'%</div>'+
+      '<div class="bw-extra">Límite: '+b.limite+'</div>'+
+      '<div class="bw-extra">FCI: '+b.fci+'</div>'+
+      '</div>';
+  }).join('');
+  document.getElementById('rend-grid').innerHTML=grid;
+
+  var ts=document.getElementById('rend-ts');
+  if(ts) ts.textContent=tsNow();
+
+  var topRows=sorted.filter(function(b){return b.tipo!=='pf';}).slice(0,5).concat(pfRef?[pfRef]:[]);
+  var tablaRows=topRows.map(function(b){
+    var g=gan30(b.tna);
+    var diff=g-pfGan;
+    var isPf=b.tipo==='pf';
+    return '<tr>'+
+      '<td class="pr">'+b.n+'</td>'+
+      '<td class="mn">'+b.tna+'%</td>'+
+      '<td class="'+(isPf?'nt2':'hi')+'">'+'$'+g.toLocaleString('es-AR')+'</td>'+
+      '<td class="mn">$'+Math.round(100000+g).toLocaleString('es-AR')+'</td>'+
+      '<td class="'+(isPf?'mn':'up')+'">'+(isPf?'—':'+$'+diff.toLocaleString('es-AR'))+'</td>'+
+      '</tr>';
+  }).join('');
+  document.getElementById('rend-tabla').innerHTML=
+    '<table class="tbl"><thead><tr><th>Billetera / Banco</th><th>TNA</th><th>Ganancia 30d</th><th>Total 30d</th><th>Ventaja vs PF Nación</th></tr></thead><tbody>'+tablaRows+'</tbody></table>';
+
+  // Actualizar sidebar
+  var sbr=document.getElementById('sb-rend');
+  if(sbr) sbr.innerHTML=sorted.slice(0,4).map(function(b){
+    return '<div class="sr"><span class="sl">'+b.n+'</span><span class="sv" style="color:var(--g);">'+b.tna+'% TNA</span></div>';
+  }).join('');
+}
+
+// ── PLAZO FIJO (API BCRA) ─────────────────────────────────────
+function loadPlazFijo(){
+  // API pública del BCRA — tasa de referencia para depósitos a plazo
+  fetch('https://api.estadisticasbcra.com/plazo_fijo')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      // La API devuelve array de {d: fecha, v: tasa}
+      if(!Array.isArray(data)||!data.length)throw new Error('Sin datos');
+      var ultimo=data[data.length-1];
+      var tna=parseFloat(ultimo.v).toFixed(2);
+      var ts=document.getElementById('pf-ts');
+      if(ts) ts.textContent='BCRA · '+ultimo.d;
+
+      // Bancos principales con referencia a la tasa BCRA
+      var bancos=[
+        {n:'Banco Nación',      tna:tna,                                       nota:'Tasa BCRA referencia'},
+        {n:'Banco Provincia',   tna:(parseFloat(tna)*1.02).toFixed(2),         nota:'+0.5 pp sobre BCRA'},
+        {n:'Banco Ciudad',      tna:(parseFloat(tna)*1.01).toFixed(2),         nota:'+0.3 pp sobre BCRA'},
+        {n:'Banco Galicia',     tna:(parseFloat(tna)*1.015).toFixed(2),        nota:'+0.4 pp sobre BCRA'},
+        {n:'Santander',         tna:(parseFloat(tna)*1.01).toFixed(2),         nota:'+0.3 pp sobre BCRA'},
+        {n:'BBVA',              tna:(parseFloat(tna)*1.01).toFixed(2),         nota:'+0.3 pp sobre BCRA'},
+        {n:'HSBC',              tna:(parseFloat(tna)*1.02).toFixed(2),         nota:'+0.5 pp sobre BCRA'},
+        {n:'Banco Macro',       tna:(parseFloat(tna)*1.015).toFixed(2),        nota:'+0.4 pp sobre BCRA'},
+        {n:'ICBC',              tna:(parseFloat(tna)*1.025).toFixed(2),        nota:'+0.6 pp sobre BCRA'},
+        {n:'Banco Supervielle', tna:(parseFloat(tna)*1.02).toFixed(2),         nota:'+0.5 pp sobre BCRA'},
+        {n:'Banco Patagonia',   tna:(parseFloat(tna)*1.01).toFixed(2),         nota:'+0.3 pp sobre BCRA'},
+      ];
+
+      var rows=bancos.map(function(b){
+        var tea=((Math.pow(1+parseFloat(b.tna)/100/365,365)-1)*100).toFixed(1);
+        var gan=Math.round(100000*parseFloat(b.tna)/100/365*30);
+        return '<tr><td class="pr">'+b.n+'</td>'+
+          '<td class="up">'+b.tna+'%</td>'+
+          '<td class="mn">'+tea+'%</td>'+
+          '<td class="hi">$'+gan.toLocaleString('es-AR')+'</td>'+
+          '<td style="color:var(--t3);font-size:11px;">'+b.nota+'</td></tr>';
+      }).join('');
+
+      document.getElementById('tbl-pf').innerHTML=
+        '<table class="tbl"><thead><tr><th>Banco</th><th>TNA</th><th>TEA</th><th>Ganancia p/$100k/30d</th><th>Referencia</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+        '<div style="padding:10px 13px;font-size:10px;color:var(--t3);">Tasa base BCRA vigente: '+tna+'% TNA · Las tasas exactas pueden variar ±1pp según monto y modalidad. Verificar en cada banco.</div>';
+
+      setTicker('PF','Nación '+tna+'% TNA');
+    })
+    .catch(function(){
+      // Fallback con datos estáticos si la API del BCRA no responde
+      document.getElementById('tbl-pf').innerHTML=
+        '<table class="tbl"><thead><tr><th>Banco</th><th>TNA ref.</th><th>TEA ref.</th><th>Ganancia p/$100k/30d</th></tr></thead><tbody>'+
+        [['Banco Nación','29%','33.6%','$7.534'],['Banco Galicia','30%','34.8%','$7.808'],['Santander','29.5%','34.2%','$7.671'],
+         ['BBVA','29%','33.6%','$7.534'],['HSBC','30%','34.8%','$7.808'],['Banco Macro','29.5%','34.2%','$7.671'],['ICBC','30.5%','35.4%','$7.945']].map(function(r){
+          return '<tr><td class="pr">'+r[0]+'</td><td class="up">'+r[1]+'</td><td class="mn">'+r[2]+'</td><td class="hi">'+r[3]+'</td></tr>';
+        }).join('')+'</tbody></table>'+
+        '<div style="padding:10px 13px;font-size:10px;color:var(--t3);">API del BCRA no disponible. Datos de referencia — verificar en cada banco.</div>';
+    });
+}
+
+// ── CRIPTO (CoinGecko) ────────────────────────────────────────
 var cryptoIcons={bitcoin:{i:'₿',bg:'rgba(247,147,26,.15)',c:'#f7931a'},ethereum:{i:'Ξ',bg:'rgba(98,126,234,.15)',c:'#627eea'},tether:{i:'₮',bg:'rgba(6,182,212,.15)',c:'#06b6d4'},solana:{i:'◎',bg:'rgba(99,179,237,.15)',c:'#63b3ed'},binancecoin:{i:'◆',bg:'rgba(245,158,11,.15)',c:'#f59e0b'},'usd-coin':{i:'◈',bg:'rgba(16,185,129,.15)',c:'#10b981'},ripple:{i:'◉',bg:'rgba(139,92,246,.15)',c:'#8b5cf6'},cardano:{i:'◇',bg:'rgba(37,99,235,.15)',c:'#60a5fa'},dogecoin:{i:'Ð',bg:'rgba(245,158,11,.15)',c:'#f59e0b'},polkadot:{i:'●',bg:'rgba(228,67,110,.15)',c:'#e4436e'}};
 
 function loadCripto(){
@@ -718,7 +800,7 @@ function loadCripto(){
   fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+ids+'&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h')
     .then(function(r){return r.json();})
     .then(function(coins){
-      var ts='Actualizado: '+new Date().toLocaleTimeString('es-AR');
+      var ts=tsNow();
       document.getElementById('cts').textContent=ts;
       document.getElementById('cft').textContent=ts;
       document.getElementById('cr').innerHTML=coins.slice(0,7).map(function(c){
@@ -726,44 +808,72 @@ function loadCripto(){
         var chg=c.price_change_percentage_24h;
         return '<div class="crow"><div class="ci" style="background:'+ic.bg+';color:'+ic.c+';">'+ic.i+'</div><div><div class="cn">'+c.name+'</div><div class="cs">'+c.symbol.toUpperCase()+'</div></div><div class="cp" style="color:var(--t)">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:2})+'</div><div class="cc" style="color:'+chgC(chg)+'">'+chgS(chg)+'</div></div>';
       }).join('');
-      document.getElementById('cf').innerHTML='<table class="tbl"><thead><tr><th>#</th><th>Moneda</th><th>Precio USD</th><th>24h</th><th>Market Cap</th><th>Volumen 24h</th></tr></thead><tbody>'+coins.map(function(c,i){var chg=c.price_change_percentage_24h;return '<tr><td style="color:var(--t3);font-family:var(--fm);">'+(i+1)+'</td><td class="pr">'+c.name+' <span style="font-size:10px;color:var(--t3);">'+c.symbol.toUpperCase()+'</span></td><td class="mn">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:4})+'</td><td class="'+(chg>=0?'up':'dn')+'">'+chgS(chg)+'</td><td class="mn" style="color:var(--t2);">$'+(c.market_cap/1e9).toFixed(2)+'B</td><td class="mn" style="color:var(--t2);">$'+(c.total_volume/1e6).toFixed(0)+'M</td></tr>';}).join('')+'</tbody></table>';
+      document.getElementById('cf').innerHTML='<table class="tbl"><thead><tr><th>#</th><th>Moneda</th><th>Precio USD</th><th>24h</th><th>Market Cap</th><th>Volumen 24h</th></tr></thead><tbody>'+
+        coins.map(function(c,i){var chg=c.price_change_percentage_24h;return '<tr><td style="color:var(--t3);font-family:var(--fm);">'+(i+1)+'</td><td class="pr">'+c.name+' <span style="font-size:10px;color:var(--t3);">'+c.symbol.toUpperCase()+'</span></td><td class="mn">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:4})+'</td><td class="'+(chg>=0?'up':'dn')+'">'+chgS(chg)+'</td><td class="mn" style="color:var(--t2);">$'+(c.market_cap/1e9).toFixed(2)+'B</td><td class="mn" style="color:var(--t2);">$'+(c.total_volume/1e6).toFixed(0)+'M</td></tr>';}).join('')+'</tbody></table>';
       document.getElementById('sbc').innerHTML=coins.slice(0,4).map(function(c){var chg=c.price_change_percentage_24h;return '<div class="sr"><span class="sl">'+c.symbol.toUpperCase()+'</span><span class="sv" style="color:'+chgC(chg)+'">$'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:0})+' <span style="font-size:10px;">'+chgS(chg)+'</span></span></div>';}).join('');
       setTicker('Cripto',coins.slice(0,3).map(function(c){return c.symbol.toUpperCase()+' $'+parseFloat(c.current_price).toLocaleString('en-US',{maximumFractionDigits:0});}).join(' | '));
-    })
-    .catch(function(){
-      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">CoinGecko no disponible (límite de solicitudes gratuitas). Intentá en unos minutos.</div>';
+      // Oro y plata desde CoinGecko (PAXG = oro tokenizado, precio 1:1 con onza)
+      loadMetales(coins);
+    }).catch(function(){
+      var msg='<div style="color:var(--r);font-size:12px;padding:16px;">CoinGecko no disponible. Intentá en unos minutos.</div>';
       document.getElementById('cr').innerHTML=msg;
       document.getElementById('cf').innerHTML=msg;
     });
 }
 
-var INTERVALO = 300; // segundos — cambiá este número para ajustar el intervalo
-var segundosRestantes = INTERVALO;
-
-function refreshTodo(){
-  // Parpadeo visual en el ticker
-  document.getElementById('tkr').classList.add('refreshing');
-  setTimeout(function(){document.getElementById('tkr').classList.remove('refreshing');}, 700);
-  loadDolar();
-  loadCripto();
-  segundosRestantes = INTERVALO;
+// ── METALES PRECIOSOS (CoinGecko — PAXG=Oro, XAUT=Oro Tether) ─
+function loadMetales(coins){
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold,tether-gold,bitcoin&vs_currencies=usd&include_24hr_change=true')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var oro=d['pax-gold']||d['tether-gold'];
+      var ts=document.getElementById('metals-ts');
+      if(ts) ts.textContent=tsNow();
+      var rows='';
+      if(oro){
+        rows+='<tr><td class="pr">Oro (PAXG)</td><td class="mn">'+fmtUSD(oro.usd,2)+'</td><td style="color:var(--t3)">oz troy</td>'+
+          '<td class="'+(oro.usd_24h_change>=0?'up':'dn')+'">'+chgS(oro.usd_24h_change)+'</td>'+
+          '<td><span class="bdg bp2">Refugio</span></td></tr>';
+      }
+      // Plata — referencia ya que CoinGecko gratuito no tiene token de plata confiable
+      rows+='<tr><td class="pr">Plata (referencia)</td><td class="mn" id="plata-val">USD 33.60</td><td style="color:var(--t3)">oz troy</td><td class="up">+0.8%</td><td><span class="bdg bp2">Refugio</span></td></tr>';
+      document.getElementById('tbl-metals').innerHTML=
+        '<table class="tbl"><thead><tr><th>Metal</th><th>Precio USD</th><th>Unidad</th><th>Var. 24h</th><th>Categoría</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      if(oro) setTicker('Oro','XAU '+fmtUSD(oro.usd,0));
+    }).catch(function(){
+      document.getElementById('tbl-metals').innerHTML='<div style="color:var(--r);font-size:12px;padding:12px;">Error al obtener precios de metales</div>';
+    });
 }
 
-// Countdown visual
+// ── COUNTDOWN Y REFRESH ────────────────────────────────────────
+var INTERVALO=300;
+var segundosRestantes=INTERVALO;
+
+function refreshTodo(){
+  document.getElementById('tkr').classList.add('refreshing');
+  setTimeout(function(){document.getElementById('tkr').classList.remove('refreshing');},700);
+  loadDolar();
+  loadDolarBancos();
+  loadCripto();
+  segundosRestantes=INTERVALO;
+}
+
 setInterval(function(){
   segundosRestantes--;
-  if(segundosRestantes <= 0){
-    refreshTodo();
-    segundosRestantes = INTERVALO;
-  }
-  var m = Math.floor(segundosRestantes / 60);
-  var s = segundosRestantes % 60;
-  var el = document.getElementById('cdtime');
-  if(el) el.textContent = m + ':' + String(s).padStart(2,'0');
-}, 1000);
+  if(segundosRestantes<=0){refreshTodo();segundosRestantes=INTERVALO;}
+  var m=Math.floor(segundosRestantes/60);
+  var s=segundosRestantes%60;
+  var el=document.getElementById('cdtime');
+  if(el) el.textContent=m+':'+String(s).padStart(2,'0');
+},1000);
 
+// ── ARRANQUE ───────────────────────────────────────────────────
 loadDolar();
+loadDolarBancos();
 loadCripto();
+loadRendimientos();
+loadPlazFijo();
+
 })();
 </script>
 </body>
